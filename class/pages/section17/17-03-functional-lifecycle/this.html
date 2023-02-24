@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>this 이해</title>
+    <script>
+      class ClassCounterPage {
+        count = 10;
+
+        onClickCountUp = () => {
+          console.log("현재카운트:", this.count); //방법1) 화살표 함수로 변경하는 방법
+        };
+
+        render() {
+          const button = document.createElement("button");
+          button.count = 100;
+          button, (innerText = "카운트 올리기");
+          button.addEventListener("click", this.onClickCountUp.bind(this)); // 방법2) .bind(this)로 연결시키는 방법
+          document.body.appendChild(button);
+        }
+      }
+
+      window.onload = () => {
+        const counter = new ClassCounterPage();
+        counter.render();
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
