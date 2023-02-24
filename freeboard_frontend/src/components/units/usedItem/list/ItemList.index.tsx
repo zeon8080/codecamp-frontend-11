@@ -1,10 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import * as S from "./ItemList.styles";
+import _ from "lodash";
 import {
   IQuery,
   IQueryFetchUseditemsArgs,
+  IUseditem,
 } from "../../../../commons/types/generated/types";
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 
 const FETCH_ITEMS_LIST = gql`
   query fetchUseditems($page: Int, $search: String) {
@@ -31,10 +35,13 @@ interface IItmesList {
 
 export default function ItemList(): JSX.Element {
   const router = useRouter();
-  const { data, fetchMore } = useQuery<
+  const { data, fetchMore, refetch } = useQuery<
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
   >(FETCH_ITEMS_LIST);
+
+  // const { data: searchData, refetch } = useQuery(FETCH_ITEMS_LIST);
+  const [keyword, setKeyword] = useState("");
 
   const onLoadMore = (): void => {
     if (data === undefined) return;
@@ -66,10 +73,35 @@ export default function ItemList(): JSX.Element {
     void router.push(`/Items/${event?.currentTarget.id}`);
   };
 
+  const getDebounce = _.debounce((value) => {
+    void refetch({ search: value, page: 1 });
+    setKeyword(value);
+  }, 700);
+
+  const onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
+    getDebounce(event.currentTarget.value);
+  };
+
+  const onClickToday = (today: IUseditem) => () => {
+    const todays: IUseditem[] = JSON.parse(
+      localStorage.getItem("today") ?? "[]"
+    );
+    console.log(todays);
+    const temp = todays.filter((el) => el._id === today._id);
+    if (temp.length >= 1) {
+      alert("이미 장바구니에 있습니다.");
+      return;
+    }
+
+    todays.push(today);
+    localStorage.setItem("todays", JSON.stringify(todays));
+  };
+
   return (
     <>
       <S.Container>
         <S.Wrapper>
+          <input type="text" onChange={onChangeSearch} />
           <S.Scroll
             pageStart={0}
             loadMore={onLoadMore}
@@ -103,6 +135,7 @@ export default function ItemList(): JSX.Element {
                 <S.ItemPrice>
                   <span style={{ margin: "10px" }}>{el.price}</span>
                 </S.ItemPrice>
+                <button onClick={onClickToday(el)}>담기</button>
               </S.ListWrapper>
             )) ?? <div></div>}
           </S.Scroll>
