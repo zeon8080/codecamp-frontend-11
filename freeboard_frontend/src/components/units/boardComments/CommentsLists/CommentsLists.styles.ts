@@ -42,7 +42,7 @@ export const ImgBox = styled.div`
 
 export const ImageBtn = styled.button`
   border: none;
-  background-color: white;
+  background-color: #d6fae4;
   margin-left: 29.33px;
   cursor: pointer;
 `;
@@ -126,15 +126,15 @@ export const CommentLimit = styled.span`
   padding: 14px 20px;
 `;
 
-export const CommentBtn = styled.button`
-  width: 100px;
-  height: 100%;
-  padding: 14px 16px;
-  color: white;
-  background-color: black;
+// export const CommentBtn = styled.button`
+//   width: 100px;
+//   height: 100%;
+//   padding: 14px 16px;
+//   color: white;
+//   background-color: white;
 
-  cursor: pointer;
-`;
+//   cursor: pointer;
+// `;
 
 export const CommentDate = styled.div`
   padding: 20px 60px;
