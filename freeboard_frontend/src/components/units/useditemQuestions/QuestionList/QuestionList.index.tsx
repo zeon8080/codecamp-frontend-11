@@ -8,7 +8,7 @@ import {
   IQueryFetchUseditemQuestionsArgs,
 } from "../../../../commons/types/generated/types";
 import * as S from "./QuestionList.styles";
-import InputQuestion from "../../../commons/inputs/questionWrite";
+import { useClickAnswer } from "../../../commons/hooks/customs/useClickAnswer";
 
 export const FETCH_QUESTIONS = gql`
   query fetchUseditemQuestions($useditemId: ID!, $page: Int) {
@@ -55,6 +55,7 @@ interface IQuestionUpdate {
 
 export default function QuestionList() {
   const router = useRouter();
+  const { isAnswer, onClickAnswer, onClickNewAnswer } = useClickAnswer();
   const [updateQuestion] = useMutation(UPDATE_QUESTION);
   const [deleteQuestion] = useMutation(DELETE_QUESTION);
   const { data, fetchMore } = useQuery<
@@ -65,7 +66,7 @@ export default function QuestionList() {
       useditemId: String(router.query.useditemId),
     },
   });
-  const { register, handleSubmit, formState } = useForm<IQuestionUpdate>({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
@@ -98,8 +99,6 @@ export default function QuestionList() {
 
   const onClickQuestionUpdate = async (data, event) => {
     console.log(data);
-    console.log(event);
-
     const result = await updateQuestion({
       variables: {
         updateUseditemQuestionInput: {
@@ -107,6 +106,12 @@ export default function QuestionList() {
         },
         useditemQuestionId: event.target.id,
       },
+      refetchQueries: [
+        {
+          query: FETCH_QUESTIONS,
+          variables: { useditemId: router.query.useditemId },
+        },
+      ],
     });
     console.log(result);
     setMyIndex(-1);
@@ -117,6 +122,12 @@ export default function QuestionList() {
       variables: {
         useditemQuestionId: event.target.id,
       },
+      refetchQueries: [
+        {
+          query: FETCH_QUESTIONS,
+          variables: { useditemId: router.query.useditemId },
+        },
+      ],
     });
     alert("삭제되었습니다.");
   };
@@ -146,16 +157,35 @@ export default function QuestionList() {
                   <button id={el._id} type="button" onClick={onClickDelete}>
                     Delete
                   </button>
+                  <button onClick={onClickNewAnswer} id={el._id}>
+                    Answer
+                  </button>
                 </S.QuestionBox>
               </S.Container>
+              <div>
+                {isAnswer ? (
+                  <form onSubmit={handleSubmit(onClickAnswer)} id={el._id}>
+                    <input type="text" {...register("contents")} />
+                    <button>답변등록</button>
+                  </form>
+                ) : (
+                  <div></div>
+                )}
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit(onClickQuestionUpdate)} id={el._id}>
               <div key={el._id}>
                 <S.Container>
                   <S.QuestionBox>
-                    <InputQuestion register={register("contents")} />
-                    <button id={el._id}>Edit</button>
+                    <input
+                      type="text"
+                      {...register("contents")}
+                      defaultValue={
+                        data?.fetchUseditemQuestions[index].contents
+                      }
+                    />
+                    <button id={el._id}>Edit Complete</button>
                   </S.QuestionBox>
                 </S.Container>
               </div>

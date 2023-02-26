@@ -11,7 +11,7 @@ export default function InputItemWrite(props: IInputProps): JSX.Element {
     <input
       type={props.type}
       {...props.register}
-      // defaultValue={props.register}
+      // defaultValue={{ ...props.register }}
     />
   );
 }

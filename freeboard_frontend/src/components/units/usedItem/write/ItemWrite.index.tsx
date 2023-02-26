@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "./ItemWrite.validation";
 import * as S from "./ItemWrite.styles";
-import InputItemWrite from "../../../commons/inputs/itemWrite";
 import "react-quill/dist/quill.snow.css";
 import {
   IItemWrite,
@@ -13,12 +12,49 @@ import { useRouter } from "next/router";
 import { useClickEdit } from "../../../commons/hooks/customs/useClickEdit";
 import dynamic from "next/dynamic";
 import KakaoPage from "../../../commons/map/kakao";
+import { gql, useQuery } from "@apollo/client";
+import {
+  IQuery,
+  IQueryFetchUseditemArgs,
+} from "../../../../commons/types/generated/types";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
 
+const FETCH_ITEM = gql`
+  query fetchUseditem($useditemId: ID!) {
+    fetchUseditem(useditemId: $useditemId) {
+      _id
+      name
+      remarks
+      contents
+      price
+      createdAt
+      seller {
+        name
+      }
+      images
+      # pickedCount
+      # buyer
+      # useditemAddress {
+      #   zipcode
+      #   address
+      #   addressDetail
+      # }
+    }
+  }
+`;
+
 export default function ItemWrite(props: IItemWrite) {
   const router = useRouter();
+  const { data } = useQuery<
+    Pick<IQuery, "fetchUseditem">,
+    IQueryFetchUseditemArgs
+  >(FETCH_ITEM, {
+    variables: {
+      useditemId: String(router.query.useditemId),
+    },
+  });
 
   const { onClickNew, onChangeFile, imageUrls } = useClickNew();
   const { onClickEdit } = useClickEdit();
@@ -52,14 +88,27 @@ export default function ItemWrite(props: IItemWrite) {
         <S.Wrapper>
           <S.Title>상품 {props.isEdit ? "수정" : "등록"}</S.Title>
           <div>상품명</div>
-          <InputItemWrite register={register("name")} />
+          <input
+            type="text"
+            {...register("name")}
+            defaultValue={data?.fetchUseditem.name ?? ""}
+          />
+
           <div>{formState.errors.name?.message}</div>
           <div>한줄요약</div>
-          <InputItemWrite register={register("remarks")} />
+          <input
+            type="text"
+            {...register("remarks")}
+            defaultValue={data?.fetchUseditem.remarks ?? ""}
+          />
           <div>상품설명</div>
           <ReactQuill onChange={onChangeContents} />
           <div>판매가격</div>
-          <InputItemWrite register={register("price")} />
+          <input
+            type="text"
+            {...register("price")}
+            defaultValue={data?.fetchUseditem.price ?? ""}
+          />
           <div>태그입력</div>
           {/* <InputItemWrite register={register("tags")} /> */}
           <div>주소</div>

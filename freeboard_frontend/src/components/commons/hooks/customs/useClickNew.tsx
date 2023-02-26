@@ -34,7 +34,12 @@ export interface IItemWrite {
   price: number;
   fileUrls: UseFieldArrayReturn;
   onClickNew: (data: IItemWrite) => void;
-
+  // defaultValues: {
+  //   name?: string | undefined;
+  //   remarks?: string | undefined;
+  //   contents?: string | undefined;
+  //   price?: number | undefined;
+  // };
   isEdit: boolean;
   data?: Pick<IQuery, "fetchUseditem">;
 }
