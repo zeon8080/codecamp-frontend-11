@@ -22,18 +22,18 @@ export const useClickAnswer = () => {
     setIsAnswer(true);
   };
 
-  const onClickAnswer = (data, event) => {
+  const onClickAnswer = async (data, event) => {
     console.log("대댓글 데이터", data);
-    const result = createAnswer({
+    const result = await createAnswer({
       variables: {
         createUseditemQuestionAnswerInput: {
           contents: data.contents,
         },
         useditemQuestionId: event.target.id,
+        // useditemQuestionId: "63fbf104aef9f000281b2bc9",
       },
     });
-    console.log(result);
-    console.log("대댓글 ㅇㅂ", event.target.id);
+    console.log(event);
     setIsAnswer(false);
   };
   return { isAnswer, onClickAnswer, onClickNewAnswer };

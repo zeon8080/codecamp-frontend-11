@@ -66,7 +66,7 @@ export default function QuestionList() {
       useditemId: String(router.query.useditemId),
     },
   });
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
 
@@ -164,9 +164,9 @@ export default function QuestionList() {
               </S.Container>
               <div>
                 {isAnswer ? (
-                  <form onSubmit={handleSubmit(onClickAnswer)} id={el._id}>
+                  <form id={el._id} onSubmit={handleSubmit(onClickAnswer)}>
                     <input type="text" {...register("contents")} />
-                    <button>답변등록</button>
+                    <button>Answer Complete</button>
                   </form>
                 ) : (
                   <div></div>
