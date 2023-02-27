@@ -32,7 +32,13 @@ export default function MemoPage() {
       <div>count: {countLet}</div>
       <button onClick={onClickLet}>카운트</button>
       <div>count: {count}</div>
-      <button onClick={onClickState}>카운트</button>
+      <button
+        onClick={useCallback(() => {
+          setCount((prev) => prev + 1);
+        }, [])}
+      >
+        카운트
+      </button>
       <div></div>
       <MemoChild />
     </>

@@ -15,26 +15,24 @@ const CREATE_ANSWER = gql`
   }
 `;
 export const useClickAnswer = () => {
-  const [isAnswer, setIsAnswer] = useState(false);
   const [createAnswer] = useMutation(CREATE_ANSWER);
+  const [answerIndex, setAnswerIndex] = useState(-1);
 
-  const onClickNewAnswer = () => {
-    setIsAnswer(true);
+  const onClickNewAnswer = (event) => {
+    setAnswerIndex(Number(event.currentTarget.id));
   };
 
   const onClickAnswer = async (data, event) => {
     console.log("대댓글 데이터", data);
-    const result = await createAnswer({
+    await createAnswer({
       variables: {
         createUseditemQuestionAnswerInput: {
           contents: data.contents,
         },
         useditemQuestionId: event.target.id,
-        // useditemQuestionId: "63fbf104aef9f000281b2bc9",
       },
     });
-    console.log(event);
-    setIsAnswer(false);
+    setAnswerIndex(-1);
   };
-  return { isAnswer, onClickAnswer, onClickNewAnswer };
+  return { answerIndex, onClickAnswer, onClickNewAnswer };
 };

@@ -1,6 +1,5 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroller";
 import {
@@ -9,6 +8,8 @@ import {
 } from "../../../../commons/types/generated/types";
 import * as S from "./QuestionList.styles";
 import { useClickAnswer } from "../../../commons/hooks/customs/useClickAnswer";
+import { useClickQuestionEdit } from "../../../commons/hooks/customs/useClickQuestionEdit";
+import { useClickQuestion } from "../../../commons/hooks/customs/useClickQuestion";
 
 export const FETCH_QUESTIONS = gql`
   query fetchUseditemQuestions($useditemId: ID!, $page: Int) {
@@ -23,8 +24,7 @@ export const FETCH_QUESTIONS = gql`
     }
   }
 `;
-
-const UPDATE_QUESTION = gql`
+export const UPDATE_QUESTION = gql`
   mutation updateUseditemQuestion(
     $updateUseditemQuestionInput: UpdateUseditemQuestionInput!
     $useditemQuestionId: ID!
@@ -37,27 +37,26 @@ const UPDATE_QUESTION = gql`
     }
   }
 `;
-
-const DELETE_QUESTION = gql`
-  mutation deleteUseditemQuestion($useditemQuestionId: ID!) {
-    deleteUseditemQuestion(useditemQuestionId: $useditemQuestionId)
-  }
-`;
+// const FETCH_ANSWER = gql`
+//   query fetchUseditemQuestionAnswers($useditemQuestionId: ID!) {
+//     fetchUseditemQuestionAnswers(useditemQuestionId: $useditemQuestionId) {
+//       _id
+//       contents
+//       # createdAt
+//     }
+//   }
+// `;
 
 interface IQusetionList {
   data?: Pick<IQuery, "fetchUseditemQuestions">;
   onLoadMore: () => void;
 }
-
 interface IQuestionUpdate {
   contents: string;
 }
-
 export default function QuestionList() {
   const router = useRouter();
-  const { isAnswer, onClickAnswer, onClickNewAnswer } = useClickAnswer();
-  const [updateQuestion] = useMutation(UPDATE_QUESTION);
-  const [deleteQuestion] = useMutation(DELETE_QUESTION);
+  // const { data: answerData } = useQuery(FETCH_ANSWER);
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchUseditemQuestions">,
     IQueryFetchUseditemQuestionsArgs
@@ -66,11 +65,15 @@ export default function QuestionList() {
       useditemId: String(router.query.useditemId),
     },
   });
-  const { register, handleSubmit, setValue } = useForm({
+
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
+  const { onClickQuestionDelete } = useClickQuestion();
+  const { answerIndex, onClickAnswer, onClickNewAnswer } = useClickAnswer();
+  const { myIndex, onClickQuestionEdit, onClickQuestionEditComplete } =
+    useClickQuestionEdit();
 
-  const [myIndex, setMyIndex] = useState(-1);
   const onLoadMore = (): void => {
     if (data === undefined) return;
     void fetchMore({
@@ -91,45 +94,6 @@ export default function QuestionList() {
         };
       },
     });
-  };
-
-  const onClickQuestionEdit = (event) => {
-    setMyIndex(Number(event.currentTarget.id));
-  };
-
-  const onClickQuestionUpdate = async (data, event) => {
-    console.log(data);
-    const result = await updateQuestion({
-      variables: {
-        updateUseditemQuestionInput: {
-          contents: data.contents,
-        },
-        useditemQuestionId: event.target.id,
-      },
-      refetchQueries: [
-        {
-          query: FETCH_QUESTIONS,
-          variables: { useditemId: router.query.useditemId },
-        },
-      ],
-    });
-    console.log(result);
-    setMyIndex(-1);
-  };
-
-  const onClickDelete = async (event) => {
-    await deleteQuestion({
-      variables: {
-        useditemQuestionId: event.target.id,
-      },
-      refetchQueries: [
-        {
-          query: FETCH_QUESTIONS,
-          variables: { useditemId: router.query.useditemId },
-        },
-      ],
-    });
-    alert("삭제되었습니다.");
   };
 
   return (
@@ -154,27 +118,34 @@ export default function QuestionList() {
                   <button onClick={onClickQuestionEdit} id={String(index)}>
                     Edit
                   </button>
-                  <button id={el._id} type="button" onClick={onClickDelete}>
+                  <button
+                    id={el._id}
+                    type="button"
+                    onClick={onClickQuestionDelete}
+                  >
                     Delete
                   </button>
-                  <button onClick={onClickNewAnswer} id={el._id}>
+                  <button onClick={onClickNewAnswer} id={String(index)}>
                     Answer
                   </button>
                 </S.QuestionBox>
               </S.Container>
-              <div>
-                {isAnswer ? (
-                  <form id={el._id} onSubmit={handleSubmit(onClickAnswer)}>
-                    <input type="text" {...register("contents")} />
-                    <button>Answer Complete</button>
-                  </form>
-                ) : (
-                  <div></div>
-                )}
-              </div>
+
+              {index === answerIndex ? (
+                <form onSubmit={handleSubmit(onClickAnswer)} id={el._id}>
+                  <input type="text" {...register("contents")} />
+                  <button>Answer Complete</button>
+                </form>
+              ) : (
+                <div></div>
+              )}
+              {/* <div>{answerData?.fetchUseditemQuestionAnswers.contents}</div> */}
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onClickQuestionUpdate)} id={el._id}>
+            <form
+              onSubmit={handleSubmit(onClickQuestionEditComplete)}
+              id={el._id}
+            >
               <div key={el._id}>
                 <S.Container>
                   <S.QuestionBox>

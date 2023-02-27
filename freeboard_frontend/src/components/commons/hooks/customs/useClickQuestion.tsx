@@ -1,6 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { FETCH_QUESTIONS } from "../../../units/useditemQuestions/QuestionList/QuestionList.index";
 // import {
 //   IMutation,
@@ -21,6 +20,12 @@ const CREATE_QUESTION = gql`
   }
 `;
 
+const DELETE_QUESTION = gql`
+  mutation deleteUseditemQuestion($useditemQuestionId: ID!) {
+    deleteUseditemQuestion(useditemQuestionId: $useditemQuestionId)
+  }
+`;
+
 export interface IQuestionWrite {
   contents: string;
   //   onClickQuestion: (data: IQuestionWrite) => void;
@@ -28,8 +33,6 @@ export interface IQuestionWrite {
 
 export const useClickQuestion = () => {
   const router = useRouter();
-  const [contents, setQuestionContents] = useState("");
-
   const [createQuestion] = useMutation(
     //   <
     //     Pick<IMutation, "createUseditemQuestion">,
@@ -37,6 +40,7 @@ export const useClickQuestion = () => {
     //   >
     CREATE_QUESTION
   );
+  const [deleteQuestion] = useMutation(DELETE_QUESTION);
 
   const onClickQuestion = async (data: IQuestionWrite) => {
     try {
@@ -59,8 +63,22 @@ export const useClickQuestion = () => {
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
-
-    // setQuestionContents("");
   };
-  return { onClickQuestion };
+
+  const onClickQuestionDelete = async (event) => {
+    await deleteQuestion({
+      variables: {
+        useditemQuestionId: event.target.id,
+      },
+      refetchQueries: [
+        {
+          query: FETCH_QUESTIONS,
+          variables: { useditemId: router.query.useditemId },
+        },
+      ],
+    });
+    alert("삭제되었습니다.");
+  };
+
+  return { onClickQuestion, onClickQuestionDelete };
 };
