@@ -1,0 +1,62 @@
+<!-- promise 는 axios 나 mutation 이라고 대충 생각 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>promise.all</title>
+
+    <script>
+      const startPromise = async () => {
+        console.time("===개별 promise 각각===");
+        const result1 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("성공1");
+          }, 2000);
+        });
+
+        const result2 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("성공2");
+          }, 3000);
+        });
+
+        const result3 = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("성공3");
+          }, 1000);
+        });
+        const results = [result1, result2, result3];
+        console.log(results);
+        console.timeEnd("===개별 promise 각각===");
+      };
+      const startPromiseAll = async () => {
+        // await Promise.all([promise, promise, promise]);
+        console.time("===한번에 promise 전부===");
+        const results = await Promise.all([
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("성공1");
+            }, 2000);
+          }),
+
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("성공2");
+            }, 3000);
+          }),
+
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("성공3");
+            }, 1000);
+          }),
+        ]);
+        console.timeEnd("===한번에 promise 전부===");
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="startPromise()">promise 연습</button>
+    <button onclick="startPromiseAll()">promise.all 연습</button>
+  </body>
+</html>
