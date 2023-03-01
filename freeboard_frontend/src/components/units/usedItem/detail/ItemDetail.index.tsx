@@ -56,7 +56,7 @@ export default function ItemDetail(): JSX.Element {
   });
 
   const onClickMoveEdit = () => {
-    ~router.push(`/Items/${router.query.useditemId}/edit`);
+    router.push(`/Items/${router.query.useditemId}/edit`);
   };
 
   const onClickMoveList = () => {
