@@ -5,14 +5,14 @@ import Layout from "../src/commons/layout";
 import ApolloSetting from "../src/commons/apollo";
 import { RecoilRoot } from "recoil";
 
-export default function App({ Component }: AppProps): JSX.Element {
+export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <RecoilRoot>
       <ApolloSetting>
         <>
           <Global styles={globalStyles} />
           <Layout>
-            <Component />
+            <Component {...pageProps} />
             {/* 타입에러 버전간의 오류 => 패키지제이슨 =>  */}
           </Layout>
         </>

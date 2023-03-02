@@ -10,11 +10,12 @@ export default function MainPagePresenter(props: MainPageUI): JSX.Element {
           <S.Texts>Show your colors</S.Texts>
         </S.TitleBox>
 
-        <div>
-          <S.Video autoPlay muted playsInline loop={true}>
+        <S.MainPageBackground>
+          {/* <S.Video autoPlay muted playsInline loop={true}>
             <source src="/greenpainting.mov"></source>
-          </S.Video>
-        </div>
+          </S.Video> */}
+          <img src="../../../greenImg.png" />
+        </S.MainPageBackground>
 
         <S.WheelBtn onClick={props.onClickMoveBoardLists}>
           <S.Wheel src="../../../wheel.png"></S.Wheel>

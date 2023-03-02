@@ -27,7 +27,6 @@ export const useClickLogin = () => {
           return;
         }
         setAccessToken(accessToken);
-        localStorage.setItem("accessToken", accessToken);
         void router.push("/Items");
       }
     } catch (error) {

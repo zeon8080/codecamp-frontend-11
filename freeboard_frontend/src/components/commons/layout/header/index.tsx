@@ -21,48 +21,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const LogInBtn = styled.button`
-  border: 1px solid black;
-  border-radius: 10px;
-  height: 50px;
-  width: 100px;
-  font-weight: bold;
-  color: #3e4149;
-  background-color: #8cf2b3;
-  border: 5px solid #4ce185;
-
-  margin-right: 10px;
-  cursor: pointer;
-`;
-
-const MainBtn = styled.button`
-  border: 1px solid black;
-  border-radius: 10px;
-  height: 50px;
-  width: 100px;
-  font-weight: bold;
-  color: #3e4149;
-  background-color: #8cf2b3;
-  border: 5px solid #4ce185;
-
-  margin-right: 10px;
-  cursor: pointer;
-`;
-
-const ListsBtn = styled.button`
-  border: 1px solid black;
-  border-radius: 10px;
-  height: 50px;
-  width: 100px;
-  font-weight: bold;
-  color: #3e4149;
-  background-color: #8cf2b3;
-  border: 5px solid #4ce185;
-
-  margin-right: 10px;
-  cursor: pointer;
-`;
-const ItemsBtn = styled.button`
+const Buttons = styled.button`
   border: 1px solid black;
   border-radius: 10px;
   height: 50px;
@@ -72,19 +31,6 @@ const ItemsBtn = styled.button`
   background-color: #8cf2b3;
   border: 5px solid #4ce185;
   margin-right: 10px;
-  cursor: pointer;
-`;
-
-const JoinBtn = styled.button`
-  border: 1px solid black;
-  border-radius: 10px;
-  height: 50px;
-  width: 100px;
-  font-weight: bold;
-  color: #3e4149;
-  background-color: #8cf2b3;
-  border: 5px solid #4ce185;
-  margin-right: 50px;
   cursor: pointer;
 `;
 
@@ -107,17 +53,22 @@ export default function LayoutHeader(): JSX.Element {
     void router.push("/main");
   };
 
+  const onClickMyPage = (): void => {
+    void router.push("/Items/myPage");
+  };
+
   const onClickItems = (): void => {
     void router.push("/Items");
   };
 
   return (
     <Wrapper>
-      <MainBtn onClick={onClickMain}>Main</MainBtn>
-      <ListsBtn onClick={onClickLists}>List</ListsBtn>
-      <ItemsBtn onClick={onClickItems}>Items</ItemsBtn>
-      <LogInBtn onClick={onClickLogIn}>Log - In</LogInBtn>
-      <JoinBtn onClick={onClickJoin}>Join - Us</JoinBtn>
+      <Buttons onClick={onClickMain}>Main</Buttons>
+      <Buttons onClick={onClickLists}>Boards</Buttons>
+      <Buttons onClick={onClickItems}>Items</Buttons>
+      <Buttons onClick={onClickLogIn}>Log - In</Buttons>
+      <Buttons onClick={onClickJoin}>Join - Us</Buttons>
+      <Buttons onClick={onClickMyPage}>My Page</Buttons>
     </Wrapper>
   );
 }

@@ -6,22 +6,22 @@ export const Wrapper = styled.div`
   position: relative;
 `;
 
-export const Video = styled.video`
-  position: fixed;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: -1; ;
-`;
-
-// export const MainPageBackground = styled.div`
-//   background-repeat: no-repeat;
+// export const Video = styled.video`
+//   position: fixed;
+//   width: 100%;
 //   background-size: cover;
 //   background-position: center;
-//   position: fixed;
-//   height: 100%;
-//   width: 100%;
+//   z-index: -1; ;
 // `;
+
+export const MainPageBackground = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+`;
 
 export const TitleBox = styled.div`
   position: absolute;

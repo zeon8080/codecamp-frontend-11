@@ -85,7 +85,7 @@ export default function ImageUploadPage(): JSX.Element {
 
   return (
     <>
-      <input type="file" onChange={onChangeFile} multiple={true} />
+      <input type="file" onChange={wrapAsync(onChangeFile)} multiple={true} />
       <img src={imageUrl} />
       <button onClick={wrapAsync(onClickSubmit)}>게시글 등록</button>
       {/* <img src={`https://storage.googleapis.com/${imageUrl}`} /> */}

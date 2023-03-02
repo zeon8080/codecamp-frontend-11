@@ -7,7 +7,6 @@ import {
   IItemWrite,
   useClickNew,
 } from "../../../commons/hooks/customs/useClickNew";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useClickEdit } from "../../../commons/hooks/customs/useClickEdit";
 import dynamic from "next/dynamic";
@@ -17,6 +16,7 @@ import {
   IQuery,
   IQueryFetchUseditemArgs,
 } from "../../../../commons/types/generated/types";
+import { LoginCheck } from "../../../commons/hocs/withAuth";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
@@ -65,18 +65,13 @@ export default function ItemWrite(props: IItemWrite) {
       mode: "onChange",
     });
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken") === null) {
-      alert("로그인 후에 이용해주세요.");
-      void router.push("/log-in");
-    }
-  }, []);
-
   const onChangeContents = (value: string): void => {
     console.log(value);
     setValue("contents", value === "<p><br></p>" ? "" : value);
     void trigger("contents");
   };
+
+  LoginCheck();
 
   return (
     <form
