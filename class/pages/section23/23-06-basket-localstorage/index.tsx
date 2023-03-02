@@ -22,10 +22,10 @@ export default function StaticRoutingMovedPage(): JSX.Element {
   );
 
   // event 생략가능
-  const onClickBasket = (basket: IBoard) => (event) => {
+  const onClickBasket = (basket: IBoard) => () => {
     // 1. 기존 장바구니 가져오기
     const baskets: IBoard[] = JSON.parse(
-      localStorage.getItem("basket") ?? "[]"
+      localStorage.getItem("baskets") ?? "[]"
     );
 
     // 2. 이미 담겨있는지 확인하기

@@ -29,9 +29,11 @@ const FETCH_USER = gql`
     }
   }
 `;
-
+interface IForm {
+  point: string;
+}
 export default function MyPage() {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<IForm>({
     mode: "onChange",
   });
   const [createPointTransactionOfLoading] = useMutation<
@@ -50,7 +52,7 @@ export default function MyPage() {
     console.log(result);
   };
 
-  const onClickPayment = (point: { point: number }): void => {
+  const onClickPayment = (point: IForm): void => {
     const IMP = window.IMP;
     IMP.init("imp49910675");
 

@@ -5,6 +5,7 @@ import { getDate } from "../../../../commons/libraries/util";
 import {
   IMutation,
   IMutationDeleteUseditemArgs,
+  IMutationToggleUseditemPickArgs,
   IQuery,
   IQueryFetchUseditemArgs,
 } from "../../../../commons/types/generated/types";
@@ -34,6 +35,12 @@ const FETCH_ITEM = gql`
   }
 `;
 
+const CREATE_PICK = gql`
+  mutation toggleUseditemPick($useditemId: ID!) {
+    toggleUseditemPick(useditemId: $useditemId)
+  }
+`;
+
 const DELETE_ITEM = gql`
   mutation ($useditemId: ID!) {
     deleteUseditem(useditemId: $useditemId)
@@ -42,6 +49,10 @@ const DELETE_ITEM = gql`
 
 export default function ItemDetail(): JSX.Element {
   const router = useRouter();
+  const [toggleUseditemPick] = useMutation<
+    Pick<IMutation, "toggleUseditemPick">,
+    IMutationToggleUseditemPickArgs
+  >(CREATE_PICK);
   const [deleteItem] = useMutation<
     Pick<IMutation, "deleteUseditem">,
     IMutationDeleteUseditemArgs
@@ -71,6 +82,14 @@ export default function ItemDetail(): JSX.Element {
     });
     alert("삭제되었습니다.");
     router.push("/Items");
+  };
+
+  const onClickPick = () => {
+    toggleUseditemPick({
+      variables: {
+        useditemId: String(router.query.useditemId),
+      },
+    });
   };
 
   return (
@@ -110,6 +129,7 @@ export default function ItemDetail(): JSX.Element {
               )}
             </S.ItemContents>
             <S.ItemPrice>{data?.fetchUseditem?.price}원</S.ItemPrice>
+            <button onClick={onClickPick}>찜!</button>
           </S.DetailWrapper>
           <S.ButtonBox>
             <S.Buttons onClick={onClickMoveList}>목록으로</S.Buttons>

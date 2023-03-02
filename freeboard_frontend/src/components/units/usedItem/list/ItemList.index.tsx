@@ -7,7 +7,7 @@ import {
   IQueryFetchUseditemsArgs,
   IUseditem,
 } from "../../../../commons/types/generated/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 
 const FETCH_ITEMS_LIST = gql`
@@ -42,6 +42,7 @@ export default function ItemList(): JSX.Element {
 
   // const { data: searchData, refetch } = useQuery(FETCH_ITEMS_LIST);
   const [keyword, setKeyword] = useState("");
+  const [todayList, setTodayList] = useState();
 
   const onLoadMore = (): void => {
     if (data === undefined) return;
@@ -84,7 +85,7 @@ export default function ItemList(): JSX.Element {
 
   const onClickToday = (today: IUseditem) => () => {
     const todays: IUseditem[] = JSON.parse(
-      localStorage.getItem("today") ?? "[]"
+      localStorage.getItem("todays") ?? "[]"
     );
     console.log(todays);
     const temp = todays.filter((el) => el._id === today._id);
@@ -93,12 +94,40 @@ export default function ItemList(): JSX.Element {
       return;
     }
 
-    todays.push(today);
+    todays.unshift(today);
     localStorage.setItem("todays", JSON.stringify(todays));
   };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const todayFunc = () => {
+        let localData = JSON.parse(localStorage.getItem("todays"));
+        setTodayList(localData);
+      };
+
+      todayFunc();
+    }
+  }, []);
 
   return (
     <>
+      <div>
+        {todayList?.map((el) => (
+          <>
+            <div>{el.name}</div>
+            <div>{el.price}</div>
+            <div>
+              <img
+                src={
+                  el.images[0]
+                    ? `https://storage.googleapis.com/${el.images[0]}`
+                    : "/marker.png"
+                }
+              />
+            </div>
+          </>
+        ))}
+      </div>
+      {/* 소괄호는 리턴없이 알아서 해준다! */}
       <S.Container>
         <S.Wrapper>
           <input type="text" onChange={onChangeSearch} />
