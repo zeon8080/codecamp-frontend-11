@@ -17,10 +17,9 @@ export const FETCH_QUESTIONS = gql`
       _id
       contents
       createdAt
-      #   user {
-      #     picture
-      #     name
-      #   }
+      user {
+        name
+      }
     }
   }
 `;
@@ -110,7 +109,7 @@ export default function QuestionList() {
               <S.Container>
                 <S.QuestionBox>
                   <S.QuestionContents id={el._id}>
-                    {el.contents}
+                    {el.user.name} : {el.contents}
                   </S.QuestionContents>
                   <S.QuestionCreated>
                     {el.createdAt.slice(0, 10)}

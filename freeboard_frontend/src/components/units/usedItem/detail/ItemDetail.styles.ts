@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 1200px;
+  width: 1600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,6 +78,8 @@ export const ItemName = styled.div`
 `;
 
 export const ItemContents = styled.div`
+  width: 100%;
+  height: 250px;
   margin-bottom: 20px;
 `;
 
@@ -106,4 +108,119 @@ export const DivideLine2 = styled.div`
   border-top: 1px solid #bdbdbd;
   margin-top: 87px;
   margin-bottom: 40px;
+`;
+export const TopWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const ImageBox = styled.div`
+  width: 480px;
+  height: 480px;
+  margin-right: 68px;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+`;
+
+export const NameBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 820px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 51px;
+`;
+export const EditBtnBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #d6fae4;
+  cursor: pointer;
+  margin-left: 16px;
+`;
+
+export const Divide1 = styled.div`
+  border-top: 3px solid rgba(85, 85, 85, 1);
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+export const Price = styled.span`
+  font-size: 40px;
+  font-weight: 500;
+  margin-right: 8px;
+`;
+
+export const Divide2 = styled.div`
+  border-top: 1px solid rgba(85, 85, 85, 1);
+  margin-top: 5px;
+  margin-bottom: 35px;
+`;
+export const BtnBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+`;
+
+export const EditBtn = styled.div`
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 50px;
+  width: 100px;
+  font-weight: bold;
+  color: #3e4149;
+  background-color: #8cf2b3;
+  border: 5px solid #4ce185;
+  margin-right: 10px;
+  cursor: pointer;
+  text-align: center; ;
+`;
+
+export const PickBtn = styled.button`
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 60px;
+  width: 150px;
+  font-weight: bold;
+  color: #3e4149;
+  background-color: #8cf2b3;
+  border: 5px solid #4ce185;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+export const BasketBtn = styled.button`
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 60px;
+  width: 150px;
+  font-weight: bold;
+  color: #3e4149;
+  background-color: #8cf2b3;
+  border: 5px solid #4ce185;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+export const BuyBtn = styled.button`
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 60px;
+  width: 150px;
+  font-weight: bold;
+  color: #3e4149;
+  background-color: #8cf2b3;
+  border: 5px solid #4ce185;
+  margin-right: 10px;
+  cursor: pointer;
 `;

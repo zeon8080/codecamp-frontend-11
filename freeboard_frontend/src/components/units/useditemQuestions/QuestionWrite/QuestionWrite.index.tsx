@@ -10,13 +10,14 @@ import * as S from "./QuestionWrite.styles";
 
 export default function QuestionWrite(props: IQuestionWrite): JSX.Element {
   const { onClickQuestion } = useClickQuestion();
-  const { register, handleSubmit, formState } = useForm<IQuestionWrite>({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+  const { register, handleSubmit, formState, setValue } =
+    useForm<IQuestionWrite>({
+      resolver: yupResolver(schema),
+      mode: "onChange",
+    });
 
   return (
-    <S.Form onSubmit={handleSubmit(onClickQuestion)}>
+    <S.Form onSubmit={handleSubmit(onClickQuestion(setValue))}>
       <S.QuestionBox>
         <S.QuestionInput>
           <InputQuestion register={register("contents")} />

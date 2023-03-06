@@ -1,13 +1,15 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import DOMPurify from "dompurify";
 import { useRouter } from "next/router";
-import { getDate } from "../../../../commons/libraries/util";
+import { useEffect, useState } from "react";
 import {
   IMutation,
+  IMutationCreatePointTransactionOfBuyingAndSellingArgs,
   IMutationDeleteUseditemArgs,
   IMutationToggleUseditemPickArgs,
   IQuery,
   IQueryFetchUseditemArgs,
+  IUseditem,
 } from "../../../../commons/types/generated/types";
 import * as S from "./ItemDetail.styles";
 
@@ -24,7 +26,7 @@ const FETCH_ITEM = gql`
         name
       }
       images
-      # pickedCount
+      pickedCount
       # buyer
       # useditemAddress {
       #   zipcode
@@ -35,20 +37,29 @@ const FETCH_ITEM = gql`
   }
 `;
 
-const CREATE_PICK = gql`
-  mutation toggleUseditemPick($useditemId: ID!) {
-    toggleUseditemPick(useditemId: $useditemId)
-  }
-`;
-
 const DELETE_ITEM = gql`
   mutation ($useditemId: ID!) {
     deleteUseditem(useditemId: $useditemId)
   }
 `;
 
+const CREATE_PICK = gql`
+  mutation toggleUseditemPick($useditemId: ID!) {
+    toggleUseditemPick(useditemId: $useditemId)
+  }
+`;
+
+const CREATE_BUY = gql`
+  mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
+    createPointTransactionOfBuyingAndSelling(useritemId: $useritemId) {
+      _id
+    }
+  }
+`;
+
 export default function ItemDetail(): JSX.Element {
   const router = useRouter();
+  const [basketState, setBasketState] = useState();
   const [toggleUseditemPick] = useMutation<
     Pick<IMutation, "toggleUseditemPick">,
     IMutationToggleUseditemPickArgs
@@ -65,6 +76,10 @@ export default function ItemDetail(): JSX.Element {
       useditemId: String(router.query.useditemId),
     },
   });
+  const [createPoint] = useMutation<
+    Pick<IMutation, "createPointTransactionOfBuyingAndSelling">,
+    IMutationCreatePointTransactionOfBuyingAndSellingArgs
+  >(CREATE_BUY);
 
   const onClickMoveEdit = () => {
     router.push(`/Items/${router.query.useditemId}/edit`);
@@ -84,6 +99,15 @@ export default function ItemDetail(): JSX.Element {
     router.push("/Items");
   };
 
+  const onClickBuy = async () => {
+    await createPoint({
+      variables: {
+        useritemId: String(router.query.useditemId),
+      },
+    });
+    alert("상품을 구매하였습니다.");
+  };
+
   const onClickPick = () => {
     toggleUseditemPick({
       variables: {
@@ -92,31 +116,76 @@ export default function ItemDetail(): JSX.Element {
     });
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const basketFunc = () => {
+        let basketRecent = JSON.parse(localStorage.getItem("todays"));
+        setBasketState(basketRecent);
+      };
+
+      basketFunc();
+    }
+  }, []);
+
+  const onClickBasket = (basket: IUseditem) => () => {
+    const baskets: IUseditem[] = JSON.parse(
+      localStorage.getItem("baskets") ?? "[]"
+    );
+    const temp = baskets.filter((el) => el._id === basket._id);
+    if (temp.length >= 1) {
+      alert("이미 장바구니에 있습니다.");
+      return;
+    }
+    baskets.push(basket);
+    localStorage.setItem("baskets", JSON.stringify(baskets));
+  };
+
   return (
     <>
       <S.Container>
         <S.Wrapper>
           <S.DetailWrapper>
-            <S.WriterProfile>
-              <img src="/profile.png"></img>
-              <S.WriterBox>
-                <S.Seller>{data?.fetchUseditem?.seller?.name}</S.Seller>
-                <S.CreateDate>
-                  {getDate(data?.fetchUseditem?.createdAt)}
-                </S.CreateDate>
-              </S.WriterBox>
-            </S.WriterProfile>
-            <S.DivideLine></S.DivideLine>
-            <S.Remarks>{data?.fetchUseditem?.remarks}</S.Remarks>
-            <S.ItemName>{data?.fetchUseditem?.name}</S.ItemName>
+            <S.TopWrapper>
+              <S.ImageBox>
+                <img
+                  src={`https://storage.googleapis.com/${data?.fetchUseditem.images?.[0]}`}
+                />
+              </S.ImageBox>
+              <div>
+                <S.NameBox>
+                  <div>{data?.fetchUseditem?.name}</div>
+                  <div>
+                    <S.EditBtnBox>
+                      <S.EditBtn onClick={onClickMoveEdit}>수정</S.EditBtn>
 
-            <div>
-              {data?.fetchUseditem.images
-                ?.filter((el) => el)
-                .map((el) => (
-                  <img key={el} src={`https://storage.googleapis.com/${el}`} />
-                ))}
-            </div>
+                      <S.EditBtn onClick={onClickDelete}>삭제</S.EditBtn>
+                    </S.EditBtnBox>
+                  </div>
+                </S.NameBox>
+
+                <S.Price>{data?.fetchUseditem?.price}</S.Price>
+                <span>원</span>
+                <S.Divide1></S.Divide1>
+                <S.ItemContents>{data?.fetchUseditem?.remarks}</S.ItemContents>
+
+                <S.Divide1></S.Divide1>
+                <S.BtnBox>
+                  <S.PickBtn
+                    onClick={onClickPick}
+                    style={{
+                      backgroundColor:
+                        data?.fetchUseditem.pickedCount !== 0 ? "red" : "gray",
+                    }}
+                  >
+                    찜{data?.fetchUseditem.pickedCount}
+                  </S.PickBtn>
+                  <S.BasketBtn onClick={onClickBasket(data?.fetchUseditem)}>
+                    장바구니
+                  </S.BasketBtn>
+                  <S.BuyBtn onClick={onClickBuy}>바로구매</S.BuyBtn>
+                </S.BtnBox>
+              </div>
+            </S.TopWrapper>
             <S.ItemContents>
               {typeof window !== "undefined" && (
                 <div
@@ -128,8 +197,6 @@ export default function ItemDetail(): JSX.Element {
                 />
               )}
             </S.ItemContents>
-            <S.ItemPrice>{data?.fetchUseditem?.price}원</S.ItemPrice>
-            <button onClick={onClickPick}>찜!</button>
           </S.DetailWrapper>
           <S.ButtonBox>
             <S.Buttons onClick={onClickMoveList}>목록으로</S.Buttons>

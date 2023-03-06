@@ -124,7 +124,11 @@ export default function ItemWrite(props: IItemWrite) {
                   multiple={true}
                 />
                 <img
-                  src={`https://storage.googleapis.com/${imageUrls[index]}`}
+                  src={
+                    imageUrls[index] === ""
+                      ? `https://storage.googleapis.com/${data?.fetchUseditem.images[index]}`
+                      : `https://storage.googleapis.com/${imageUrls[index]}`
+                  }
                 />
               </div>
             ))}

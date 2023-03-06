@@ -37,6 +37,7 @@ export const ListWrapper = styled.div`
   filter: drop-shadow(0 0 0.3rem #4ce185);
   margin-bottom: 20px;
   padding-top: 10px;
+  cursor: pointer;
 `;
 
 export const ItemContents = styled.div`

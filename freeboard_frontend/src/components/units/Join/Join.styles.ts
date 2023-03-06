@@ -1,17 +1,14 @@
 import styled from "@emotion/styled";
-
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-image: url("/greenImg.png");
-  background-repeat: no-repeat;
+  /* background-image: url("/greenImg.png"); */
+  /* background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center; */
   width: 100%;
   height: 100vh;
-  position: absolute;
-  top: 0;
 `;
 
 export const Wrapper = styled.div`

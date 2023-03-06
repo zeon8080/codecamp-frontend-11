@@ -42,7 +42,7 @@ export const useClickQuestion = () => {
   );
   const [deleteQuestion] = useMutation(DELETE_QUESTION);
 
-  const onClickQuestion = async (data: IQuestionWrite) => {
+  const onClickQuestion = (setValue) => async (data: IQuestionWrite) => {
     try {
       const result = await createQuestion({
         variables: {
@@ -63,6 +63,7 @@ export const useClickQuestion = () => {
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
+    setValue("contents", "");
   };
 
   const onClickQuestionDelete = async (event) => {

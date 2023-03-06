@@ -70,8 +70,19 @@ export default function ItemList(): JSX.Element {
     void router.push("/Items/new");
   };
 
-  const onClickMoveDetail = (event) => {
+  const onClickMoveDetail = (el) => (event) => {
+    onClickToday(el);
     void router.push(`/Items/${event?.currentTarget.id}`);
+  };
+
+  const onClickToday = (today: IUseditem) => {
+    const todays: IUseditem[] = JSON.parse(
+      sessionStorage.getItem("todays") ?? "[]"
+    );
+
+    todays.unshift(today);
+
+    sessionStorage.setItem("todays", JSON.stringify(todays));
   };
 
   const getDebounce = _.debounce((value) => {
@@ -81,21 +92,6 @@ export default function ItemList(): JSX.Element {
 
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
     getDebounce(event.currentTarget.value);
-  };
-
-  const onClickToday = (today: IUseditem) => () => {
-    const todays: IUseditem[] = JSON.parse(
-      localStorage.getItem("todays") ?? "[]"
-    );
-    console.log(todays);
-    const temp = todays.filter((el) => el._id === today._id);
-    if (temp.length >= 1) {
-      alert("이미 장바구니에 있습니다.");
-      return;
-    }
-
-    todays.unshift(today);
-    localStorage.setItem("todays", JSON.stringify(todays));
   };
 
   useEffect(() => {
@@ -139,7 +135,11 @@ export default function ItemList(): JSX.Element {
             useWindow={false}
           >
             {data?.fetchUseditems.map((el: any) => (
-              <S.ListWrapper key={el._id}>
+              <S.ListWrapper
+                key={el._id}
+                id={el._id}
+                onClick={onClickMoveDetail(el)}
+              >
                 {/* <span style={{ margin: "10px" }}>
                 {String(el._id).slice(-4).toUpperCase()}
               </span> */}
@@ -153,11 +153,7 @@ export default function ItemList(): JSX.Element {
                   )}
                 </S.ItemImage>
                 <S.ItemContents>
-                  <span
-                    style={{ margin: "10px", cursor: "pointer" }}
-                    id={el._id}
-                    onClick={onClickMoveDetail}
-                  >
+                  <span style={{ margin: "10px", cursor: "pointer" }}>
                     {el.name}
                   </span>
                   <div style={{ margin: "10px" }}>{el.remarks}</div>
@@ -165,7 +161,6 @@ export default function ItemList(): JSX.Element {
                 <S.ItemPrice>
                   <span style={{ margin: "10px" }}>{el.price}</span>
                 </S.ItemPrice>
-                <button onClick={onClickToday(el)}>담기</button>
               </S.ListWrapper>
             )) ?? <div></div>}
           </S.Scroll>
