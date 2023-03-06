@@ -3,7 +3,6 @@ import LayoutFooter from "./footer";
 import LayoutHeader from "./header";
 import LayoutNavigation from "./navigation";
 import { useRouter } from "next/router";
-import styled from "@emotion/styled";
 interface ILayoutProps {
   children: JSX.Element;
 }

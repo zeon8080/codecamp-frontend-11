@@ -97,7 +97,10 @@ export default function ItemWrite(props: IItemWrite) {
             defaultValue={data?.fetchUseditem.remarks ?? ""}
           />
           <div>상품설명</div>
-          <ReactQuill onChange={onChangeContents} />
+          <ReactQuill
+            onChange={onChangeContents}
+            defaultValue={data?.fetchUseditem.contents ?? ""}
+          />
           <div>판매가격</div>
           <input
             type="text"

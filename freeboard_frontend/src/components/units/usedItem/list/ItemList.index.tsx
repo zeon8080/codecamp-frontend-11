@@ -41,7 +41,7 @@ export default function ItemList(): JSX.Element {
   >(FETCH_ITEMS_LIST);
 
   // const { data: searchData, refetch } = useQuery(FETCH_ITEMS_LIST);
-  const [keyword, setKeyword] = useState("");
+  const [, setKeyword] = useState("");
   const [todayList, setTodayList] = useState();
 
   const onLoadMore = (): void => {
@@ -97,6 +97,7 @@ export default function ItemList(): JSX.Element {
     todays.unshift(today);
     localStorage.setItem("todays", JSON.stringify(todays));
   };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const todayFunc = () => {
