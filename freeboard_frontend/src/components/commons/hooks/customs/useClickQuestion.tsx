@@ -1,46 +1,16 @@
-import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { FETCH_QUESTIONS } from "../../../units/useditemQuestions/QuestionList/QuestionList.index";
-// import {
-//   IMutation,
-//   IMutationCreateUseditemQuestionArgs,
-// } from "../../../../commons/types/generated/types";
-
-const CREATE_QUESTION = gql`
-  mutation createUseditemQuestion(
-    $createUseditemQuestionInput: CreateUseditemQuestionInput!
-    $useditemId: ID!
-  ) {
-    createUseditemQuestion(
-      createUseditemQuestionInput: $createUseditemQuestionInput
-      useditemId: $useditemId
-    ) {
-      _id
-    }
-  }
-`;
-
-const DELETE_QUESTION = gql`
-  mutation deleteUseditemQuestion($useditemQuestionId: ID!) {
-    deleteUseditemQuestion(useditemQuestionId: $useditemQuestionId)
-  }
-`;
+import { useMutationQuestion } from "../mutation/useMutationQuestion";
+import { useMutationQuestionDelete } from "../mutation/useMutationQuestionDelete";
 
 export interface IQuestionWrite {
   contents: string;
-  //   onClickQuestion: (data: IQuestionWrite) => void;
 }
 
 export const useClickQuestion = () => {
   const router = useRouter();
-  const [createQuestion] = useMutation(
-    //   <
-    //     Pick<IMutation, "createUseditemQuestion">,
-    //     IMutationCreateUseditemQuestionArgs
-    //   >
-    CREATE_QUESTION
-  );
-  const [deleteQuestion] = useMutation(DELETE_QUESTION);
+  const [createQuestion] = useMutationQuestion();
+  const [deleteQuestion] = useMutationQuestionDelete();
 
   const onClickQuestion = (setValue) => async (data: IQuestionWrite) => {
     try {
@@ -49,7 +19,7 @@ export const useClickQuestion = () => {
           createUseditemQuestionInput: {
             contents: String(data.contents),
           },
-          useditemId: router.query.useditemId,
+          useditemId: String(router.query.useditemId),
         },
         refetchQueries: [
           {
@@ -69,7 +39,7 @@ export const useClickQuestion = () => {
   const onClickQuestionDelete = async (event) => {
     await deleteQuestion({
       variables: {
-        useditemQuestionId: event.target.id,
+        useditemQuestionId: String(event.target.id),
       },
       refetchQueries: [
         {

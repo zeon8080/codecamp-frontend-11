@@ -1,144 +1,33 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
 import DOMPurify from "dompurify";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {
-  IMutation,
-  IMutationCreatePointTransactionOfBuyingAndSellingArgs,
-  IMutationDeleteUseditemArgs,
-  IMutationToggleUseditemPickArgs,
-  IQuery,
-  IQueryFetchUseditemArgs,
-  IUseditem,
-} from "../../../../commons/types/generated/types";
+import { useClickBasket } from "../../../commons/hooks/customs/useClickBasket";
+import { useClickBuying } from "../../../commons/hooks/customs/useClickBuying";
+import { useClickDeleteItem } from "../../../commons/hooks/customs/useClickDeleteItem";
+import { useClickPick } from "../../../commons/hooks/customs/useClickPick";
+import { useQueryItem } from "../../../commons/hooks/query/useQueryItem";
 import * as S from "./ItemDetail.styles";
-
-const FETCH_ITEM = gql`
-  query fetchUseditem($useditemId: ID!) {
-    fetchUseditem(useditemId: $useditemId) {
-      _id
-      name
-      remarks
-      contents
-      price
-      createdAt
-      seller {
-        name
-      }
-      images
-      pickedCount
-      # buyer
-      # useditemAddress {
-      #   zipcode
-      #   address
-      #   addressDetail
-      # }
-    }
-  }
-`;
-
-const DELETE_ITEM = gql`
-  mutation ($useditemId: ID!) {
-    deleteUseditem(useditemId: $useditemId)
-  }
-`;
-
-const CREATE_PICK = gql`
-  mutation toggleUseditemPick($useditemId: ID!) {
-    toggleUseditemPick(useditemId: $useditemId)
-  }
-`;
-
-const CREATE_BUY = gql`
-  mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
-    createPointTransactionOfBuyingAndSelling(useritemId: $useritemId) {
-      _id
-    }
-  }
-`;
 
 export default function ItemDetail(): JSX.Element {
   const router = useRouter();
-  const [basketState, setBasketState] = useState();
-  const [toggleUseditemPick] = useMutation<
-    Pick<IMutation, "toggleUseditemPick">,
-    IMutationToggleUseditemPickArgs
-  >(CREATE_PICK);
-  const [deleteItem] = useMutation<
-    Pick<IMutation, "deleteUseditem">,
-    IMutationDeleteUseditemArgs
-  >(DELETE_ITEM);
-  const { data } = useQuery<
-    Pick<IQuery, "fetchUseditem">,
-    IQueryFetchUseditemArgs
-  >(FETCH_ITEM, {
-    variables: {
-      useditemId: String(router.query.useditemId),
-    },
-  });
-  const [createPoint] = useMutation<
-    Pick<IMutation, "createPointTransactionOfBuyingAndSelling">,
-    IMutationCreatePointTransactionOfBuyingAndSellingArgs
-  >(CREATE_BUY);
-
-  const onClickMoveEdit = () => {
-    router.push(`/Items/${router.query.useditemId}/edit`);
-  };
-
-  const onClickMoveList = () => {
-    router.push("/Items");
-  };
-
-  const onClickDelete = () => {
-    deleteItem({
-      variables: {
-        useditemId: String(router.query.useditemId),
-      },
-    });
-    alert("삭제되었습니다.");
-    router.push("/Items");
-  };
-
-  const onClickBuy = async () => {
-    await createPoint({
-      variables: {
-        useritemId: String(router.query.useditemId),
-      },
-    });
-    alert("상품을 구매하였습니다.");
-  };
-
-  const onClickPick = () => {
-    toggleUseditemPick({
-      variables: {
-        useditemId: String(router.query.useditemId),
-      },
-    });
-  };
+  const { onClickDeleteItem } = useClickDeleteItem();
+  const { onClickBuy } = useClickBuying();
+  const { onClickPick } = useClickPick();
+  const { onClickBasket } = useClickBasket();
+  const { data } = useQueryItem();
+  const [, setBasketState] = useState();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const basketFunc = () => {
-        let basketRecent = JSON.parse(localStorage.getItem("todays"));
+        let basketRecent = JSON.parse(localStorage.getItem("todays") ?? "null");
         setBasketState(basketRecent);
       };
 
       basketFunc();
     }
   }, []);
-
-  const onClickBasket = (basket: IUseditem) => () => {
-    const baskets: IUseditem[] = JSON.parse(
-      localStorage.getItem("baskets") ?? "[]"
-    );
-    const temp = baskets.filter((el) => el._id === basket._id);
-    if (temp.length >= 1) {
-      alert("이미 장바구니에 있습니다.");
-      return;
-    }
-    baskets.push(basket);
-    localStorage.setItem("baskets", JSON.stringify(baskets));
-  };
 
   return (
     <>
@@ -154,13 +43,6 @@ export default function ItemDetail(): JSX.Element {
               <div>
                 <S.NameBox>
                   <div>{data?.fetchUseditem?.name}</div>
-                  <div>
-                    <S.EditBtnBox>
-                      <S.EditBtn onClick={onClickMoveEdit}>수정</S.EditBtn>
-
-                      <S.EditBtn onClick={onClickDelete}>삭제</S.EditBtn>
-                    </S.EditBtnBox>
-                  </div>
                 </S.NameBox>
 
                 <S.Price>{data?.fetchUseditem?.price}</S.Price>
@@ -182,6 +64,7 @@ export default function ItemDetail(): JSX.Element {
                   <S.BasketBtn onClick={onClickBasket(data?.fetchUseditem)}>
                     장바구니
                   </S.BasketBtn>
+
                   <S.BuyBtn onClick={onClickBuy}>바로구매</S.BuyBtn>
                 </S.BtnBox>
               </div>
@@ -199,10 +82,13 @@ export default function ItemDetail(): JSX.Element {
             </S.ItemContents>
           </S.DetailWrapper>
           <S.ButtonBox>
-            <S.Buttons onClick={onClickMoveList}>목록으로</S.Buttons>
-            <S.Buttons onClick={onClickMoveEdit}>수정하기</S.Buttons>
-
-            <S.Buttons onClick={onClickDelete}>삭제하기</S.Buttons>
+            <Link href={"/Items"}>
+              <S.a>목록으로</S.a>
+            </Link>
+            <Link href={`/Items/${router.query.useditemId}/edit`}>
+              <S.a>수정하기</S.a>
+            </Link>
+            <S.a onClick={onClickDeleteItem}>삭제하기</S.a>
           </S.ButtonBox>
           <S.DivideLine2></S.DivideLine2>
         </S.Wrapper>

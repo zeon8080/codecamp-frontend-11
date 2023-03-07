@@ -1,21 +1,8 @@
-import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
+import { useMutationAnswer } from "../mutation/useMutationAnswer";
 
-const CREATE_ANSWER = gql`
-  mutation createUseditemQuestionAnswer(
-    $createUseditemQuestionAnswerInput: CreateUseditemQuestionAnswerInput!
-    $useditemQuestionId: ID!
-  ) {
-    createUseditemQuestionAnswer(
-      createUseditemQuestionAnswerInput: $createUseditemQuestionAnswerInput
-      useditemQuestionId: $useditemQuestionId
-    ) {
-      _id
-    }
-  }
-`;
 export const useClickAnswer = () => {
-  const [createAnswer] = useMutation(CREATE_ANSWER);
+  const [createAnswer] = useMutationAnswer();
   const [answerIndex, setAnswerIndex] = useState(-1);
 
   const onClickNewAnswer = (event) => {

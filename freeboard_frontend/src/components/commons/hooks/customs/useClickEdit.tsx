@@ -1,30 +1,17 @@
-import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import { useMutationUpdateItem } from "../mutation/useMutationUpdateItem";
 import { IItemWrite } from "./useClickNew";
 
-export const UPDATE_ITEM = gql`
-  mutation updateUseditem(
-    $updateUseditemInput: UpdateUseditemInput!
-    $useditemId: ID!
-  ) {
-    updateUseditem(
-      updateUseditemInput: $updateUseditemInput
-      useditemId: $useditemId
-    ) {
-      _id
-    }
-  }
-`;
 export const useClickEdit = () => {
   const router = useRouter();
-  const [updateItem] = useMutation(UPDATE_ITEM);
+  const [updateItem] = useMutationUpdateItem();
 
   const onClickEdit = async (data: IItemWrite) => {
     console.log(data);
     try {
       const result = await updateItem({
         variables: {
-          useditemId: router.query.useditemId,
+          useditemId: String(router.query.useditemId),
           updateUseditemInput: {
             name: data.name,
             remarks: data.remarks,

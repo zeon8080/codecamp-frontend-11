@@ -26,6 +26,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
+  margin-right: 20px;
 `;
 
 export const BtnWrapper = styled.div`
@@ -59,14 +60,15 @@ export const Logo = styled.div`
 export const UserName = styled.div`
   font-size: 20px;
   font-weight: 500;
-  margin-right: 2px;
-  margin-left: 2px;
+  margin-right: 5px;
+  margin-left: 5px;
 `;
 
 export const Point = styled.div`
   font-size: 20px;
   font-weight: 500;
   text-decoration: underline;
+  margin: 0 5px;
 `;
 
 export const Charge = styled.div`
@@ -76,13 +78,13 @@ export const Charge = styled.div`
 `;
 
 export const Basket = styled.div`
-  background-color: #ffe004;
+  background-color: #8cf2b3;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 12px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
   text-align: center;
-  line-height: 20px;
+  line-height: 30px;
   margin-left: 5px;
-  color: white;
+  color: black;
 `;

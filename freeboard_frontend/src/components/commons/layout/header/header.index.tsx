@@ -116,7 +116,9 @@ export default function LayoutHeader(): JSX.Element {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const basketFunc = () => {
-        let basketRecent = JSON.parse(localStorage.getItem("baskets"));
+        let basketRecent = JSON.parse(
+          localStorage.getItem("baskets") ?? "null"
+        );
         setBasketState(basketRecent);
       };
       basketFunc();
@@ -137,10 +139,10 @@ export default function LayoutHeader(): JSX.Element {
         <S.Wrapper>
           {data?.fetchUserLoggedIn ? (
             <S.BtnWrapper>
-              <S.UserName>{data?.fetchUserLoggedIn.name}님 </S.UserName>
-              <S.UserName>포인트 </S.UserName>
+              <S.UserName>{data?.fetchUserLoggedIn.name}님</S.UserName>
+              <S.UserName>포인트</S.UserName>
               <S.Point>{data?.fetchUserLoggedIn.userPoint?.amount}</S.Point>
-              <S.UserName> P </S.UserName>
+              <S.UserName>P</S.UserName>
 
               <S.Charge onClick={onClickPoints}>충전</S.Charge>
 
@@ -273,6 +275,9 @@ export default function LayoutHeader(): JSX.Element {
               <S.Btns onClick={onClickMoveLogin}>로그인</S.Btns>
               <S.Btns onClick={onClickMoveSign}>회원가입</S.Btns>
               <S.Btns>장바구니</S.Btns>
+              <S.Basket>
+                {basketState?.length !== undefined ? basketState?.length : "0"}
+              </S.Basket>
             </S.BtnWrapper>
           )}
         </S.Wrapper>

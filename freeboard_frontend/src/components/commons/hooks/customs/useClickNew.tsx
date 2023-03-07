@@ -1,31 +1,12 @@
-import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 import { useState } from "react";
 import { UseFieldArrayReturn } from "react-hook-form";
-import {
-  IMutation,
-  IMutationUploadFileArgs,
-  IQuery,
-} from "../../../../commons/types/generated/types";
+import { IQuery } from "../../../../commons/types/generated/types";
 import type { ChangeEvent } from "react";
 import { Modal } from "antd";
-
-const CREATE_ITEM = gql`
-  mutation ($createUseditemInput: CreateUseditemInput!) {
-    createUseditem(createUseditemInput: $createUseditemInput) {
-      _id
-    }
-  }
-`;
-
-export const UPLOAD_FILE = gql`
-  mutation uploadFile($file: Upload!) {
-    uploadFile(file: $file) {
-      url
-    }
-  }
-`;
+import { useMutationNew } from "../mutation/useMutationNew";
+import { useMutationUpload } from "../mutation/useMutationUploadFile";
 
 export interface IItemWrite {
   name: string;
@@ -34,12 +15,7 @@ export interface IItemWrite {
   price: number;
   fileUrls: UseFieldArrayReturn;
   onClickNew: (data: IItemWrite) => void;
-  // defaultValues: {
-  //   name?: string | undefined;
-  //   remarks?: string | undefined;
-  //   contents?: string | undefined;
-  //   price?: number | undefined;
-  // };
+
   isEdit: boolean;
   data?: Pick<IQuery, "fetchUseditem">;
 }
@@ -47,11 +23,9 @@ export interface IItemWrite {
 export const useClickNew = () => {
   const router = useRouter();
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
-  const [uploadFile] = useMutation<
-    Pick<IMutation, "uploadFile">,
-    IMutationUploadFileArgs
-  >(UPLOAD_FILE);
-  const [createItem] = useMutation(CREATE_ITEM);
+
+  const [createItem] = useMutationNew();
+  const [uploadFile] = useMutationUpload();
 
   const onChangeFile = async (
     event: ChangeEvent<HTMLInputElement>
@@ -73,18 +47,6 @@ export const useClickNew = () => {
     newFileUrls[index] = imageUrl;
     setImageUrls(newFileUrls);
   };
-
-  // const onChangeFile = async (
-  //   e: ChangeEvent<HTMLInputElement>
-  // ): Promise<void> => {
-  //   const file = e.target.files?.[0]; // 배열로 들어오는 이유: multiple을 주면 여러개의 파일을 드래그하여 가져올 수 있음
-  //   console.log(file);
-
-  //   const result = await uploadFile({ variables: { file } });
-  //   if (typeof result.data?.uploadFile.url !== "string") return;
-  //   console.log(result.data?.uploadFile.url);
-  //   setImageUrls(result.data?.uploadFile.url ?? "");
-  // };
 
   const onClickNew = async (data: IItemWrite) => {
     console.log(data);

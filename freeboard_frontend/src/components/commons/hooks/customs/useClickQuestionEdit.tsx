@@ -1,38 +1,11 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
-
-export const UPDATE_QUESTION = gql`
-  mutation updateUseditemQuestion(
-    $updateUseditemQuestionInput: UpdateUseditemQuestionInput!
-    $useditemQuestionId: ID!
-  ) {
-    updateUseditemQuestion(
-      updateUseditemQuestionInput: $updateUseditemQuestionInput
-      useditemQuestionId: $useditemQuestionId
-    ) {
-      _id
-    }
-  }
-`;
-
-export const FETCH_QUESTIONS = gql`
-  query fetchUseditemQuestions($useditemId: ID!, $page: Int) {
-    fetchUseditemQuestions(useditemId: $useditemId, page: $page) {
-      _id
-      contents
-      createdAt
-      #   user {
-      #     picture
-      #     name
-      #   }
-    }
-  }
-`;
+import { useMutationQuestionEdit } from "../mutation/useMutationQuestionEdit";
+import { FETCH_QUESTIONS } from "../query/useQueryQuestion";
 
 export const useClickQuestionEdit = () => {
   const router = useRouter();
-  const [updateQuestion] = useMutation(UPDATE_QUESTION);
+  const [updateQuestion] = useMutationQuestionEdit();
   const [myIndex, setMyIndex] = useState(-1);
 
   const onClickQuestionEdit = (event) => {

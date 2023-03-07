@@ -94,7 +94,9 @@ export const ButtonBox = styled.div`
   justify-content: center;
 `;
 
-export const Buttons = styled.button`
+export const a = styled.a`
+  text-decoration: unset;
+  color: black;
   padding: 14px 60px;
   background-color: #8cf2b3;
   border: 5px solid #4ce185;

@@ -1,18 +1,9 @@
 import { useRouter } from "next/router";
-import { useMutation } from "@apollo/client";
 import { IJoinFormData } from "../../../units/Join/Join.types";
-import { gql } from "@apollo/client";
-
-const CREATE_USER = gql`
-  mutation ($createUserInput: CreateUserInput!) {
-    createUser(createUserInput: $createUserInput) {
-      _id
-    }
-  }
-`;
+import { useMutationJoin } from "../mutation/useMutationJoin";
 
 export const useClickJoin = () => {
-  const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useMutationJoin();
   const router = useRouter();
 
   const onClickJoin = async (data: IJoinFormData): Promise<void> => {

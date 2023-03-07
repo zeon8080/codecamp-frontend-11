@@ -66,10 +66,6 @@ export default function ItemList(): JSX.Element {
     });
   };
 
-  const onClickMoveWrite = () => {
-    void router.push("/Items/new");
-  };
-
   const onClickMoveDetail = (el) => (event) => {
     onClickToday(el);
     void router.push(`/Items/${event?.currentTarget.id}`);
@@ -165,9 +161,6 @@ export default function ItemList(): JSX.Element {
             )) ?? <div></div>}
           </S.Scroll>
         </S.Wrapper>
-        <S.ItemWriteBtn onClick={onClickMoveWrite}>
-          상품 등록하기
-        </S.ItemWriteBtn>
       </S.Container>
     </>
   );

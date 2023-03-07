@@ -24,13 +24,6 @@ const Buttons = styled.button`
 `;
 export default function LayoutNavigation(): JSX.Element {
   const router = useRouter();
-  const onClickLogIn = (): void => {
-    void router.push("/log-in");
-  };
-
-  const onClickJoin = (): void => {
-    void router.push("/join");
-  };
 
   const onClickLists = (): void => {
     void router.push("/boards");
@@ -47,14 +40,17 @@ export default function LayoutNavigation(): JSX.Element {
   const onClickItems = (): void => {
     void router.push("/Items");
   };
+
+  const onClickNew = () => {
+    void router.push("/Items/new");
+  };
   return (
     <>
       <Wrapper>
         <Buttons onClick={onClickMain}>Main</Buttons>
         <Buttons onClick={onClickLists}>Boards</Buttons>
         <Buttons onClick={onClickItems}>Items</Buttons>
-        <Buttons onClick={onClickLogIn}>Log - In</Buttons>
-        <Buttons onClick={onClickJoin}>Join - Us</Buttons>
+        <Buttons onClick={onClickNew}>New Sell</Buttons>
         <Buttons onClick={onClickMyPage}>My Page</Buttons>
       </Wrapper>
     </>
