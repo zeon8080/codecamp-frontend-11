@@ -2,6 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationDeleteUseditemArgs,
+  IMutationDeleteUseditemQuestionArgs,
 } from "../../../../commons/types/generated/types";
 
 const DELETE_QUESTION = gql`
@@ -13,7 +14,7 @@ const DELETE_QUESTION = gql`
 export const useMutationQuestionDelete = () => {
   const deleteQuestion = useMutation<
     Pick<IMutation, "deleteUseditemQuestion">,
-    IMutationDeleteUseditemArgs
+    IMutationDeleteUseditemQuestionArgs
   >(DELETE_QUESTION);
 
   return deleteQuestion;

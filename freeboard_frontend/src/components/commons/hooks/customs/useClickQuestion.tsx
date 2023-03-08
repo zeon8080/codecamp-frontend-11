@@ -39,7 +39,7 @@ export const useClickQuestion = () => {
   const onClickQuestionDelete = async (event) => {
     await deleteQuestion({
       variables: {
-        useditemQuestionId: String(event.target.id),
+        useditemQuestionId: event.target.id,
       },
       refetchQueries: [
         {

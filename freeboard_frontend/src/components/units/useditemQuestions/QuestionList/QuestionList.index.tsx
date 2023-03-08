@@ -10,6 +10,7 @@ import * as S from "./QuestionList.styles";
 import { useClickAnswer } from "../../../commons/hooks/customs/useClickAnswer";
 import { useClickQuestionEdit } from "../../../commons/hooks/customs/useClickQuestionEdit";
 import { useClickQuestion } from "../../../commons/hooks/customs/useClickQuestion";
+import AnswerList from "../../useditemAnswer/AnswerList";
 
 export const FETCH_QUESTIONS = gql`
   query fetchUseditemQuestions($useditemId: ID!, $page: Int) {
@@ -36,15 +37,6 @@ export const UPDATE_QUESTION = gql`
     }
   }
 `;
-// const FETCH_ANSWER = gql`
-//   query fetchUseditemQuestionAnswers($useditemQuestionId: ID!) {
-//     fetchUseditemQuestionAnswers(useditemQuestionId: $useditemQuestionId) {
-//       _id
-//       contents
-//       # createdAt
-//     }
-//   }
-// `;
 
 // interface IQusetionList {
 //   data?: Pick<IQuery, "fetchUseditemQuestions">;
@@ -55,7 +47,7 @@ export const UPDATE_QUESTION = gql`
 // }
 export default function QuestionList() {
   const router = useRouter();
-  // const { data: answerData } = useQuery(FETCH_ANSWER);
+
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchUseditemQuestions">,
     IQueryFetchUseditemQuestionsArgs
@@ -65,9 +57,7 @@ export default function QuestionList() {
     },
   });
 
-  const { register, handleSubmit } = useForm({
-    mode: "onChange",
-  });
+  const { register, handleSubmit } = useForm();
   const { onClickQuestionDelete } = useClickQuestion();
   const { answerIndex, onClickAnswer, onClickNewAnswer } = useClickAnswer();
   const { myIndex, onClickQuestionEdit, onClickQuestionEditComplete } =
@@ -128,6 +118,7 @@ export default function QuestionList() {
                     Answer
                   </button>
                 </S.QuestionBox>
+                <AnswerList el={el._id} />
               </S.Container>
 
               {index === answerIndex ? (
@@ -138,7 +129,6 @@ export default function QuestionList() {
               ) : (
                 <div></div>
               )}
-              {/* <div>{answerData?.fetchUseditemQuestionAnswers.contents}</div> */}
             </div>
           ) : (
             <form

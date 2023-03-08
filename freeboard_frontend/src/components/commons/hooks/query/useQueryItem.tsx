@@ -31,7 +31,6 @@ const FETCH_ITEM = gql`
 
 export const useQueryItem = () => {
   const router = useRouter();
-  console.log("123123", router);
   const data = useQuery<Pick<IQuery, "fetchUseditem">, IQueryFetchUseditemArgs>(
     FETCH_ITEM,
     {

@@ -10,7 +10,6 @@ export const useClickAnswer = () => {
   };
 
   const onClickAnswer = async (data, event) => {
-    console.log("대댓글 데이터", data);
     await createAnswer({
       variables: {
         createUseditemQuestionAnswerInput: {
