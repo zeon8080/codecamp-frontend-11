@@ -106,16 +106,8 @@ export default function ItemList(): JSX.Element {
       <div>
         {todayList?.map((el) => (
           <>
-            <div>{el.name}</div>
-            <div>{el.price}</div>
             <div>
-              <img
-                src={
-                  el.images[0]
-                    ? `https://storage.googleapis.com/${el.images[0]}`
-                    : "/marker.png"
-                }
-              />
+              <img src={`https://storage.googleapis.com/${el.images[0]}`} />
             </div>
           </>
         ))}

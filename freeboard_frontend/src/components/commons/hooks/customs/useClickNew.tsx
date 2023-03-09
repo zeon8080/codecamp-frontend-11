@@ -49,7 +49,6 @@ export const useClickNew = () => {
   };
 
   const onClickNew = async (data: IItemWrite) => {
-    console.log(data);
     try {
       if (data.name && data.remarks && data.contents && data.price) {
         const result = await createItem({
@@ -60,10 +59,14 @@ export const useClickNew = () => {
               contents: data.contents,
               price: Number(data.price),
               images: [...imageUrls],
+              useditemAddress: {
+                address: address,
+              },
             },
           },
         });
         console.log(result);
+
         alert("상품이 등록되었습니다!");
         void router.push(`/Items/${result.data?.createUseditem._id}`);
       }

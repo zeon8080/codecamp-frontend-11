@@ -19,12 +19,9 @@ const FETCH_ITEM = gql`
       }
       images
       pickedCount
-      # buyer
-      # useditemAddress {
-      #   zipcode
-      #   address
-      #   addressDetail
-      # }
+      useditemAddress {
+        address
+      }
     }
   }
 `;

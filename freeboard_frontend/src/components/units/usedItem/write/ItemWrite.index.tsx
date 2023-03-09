@@ -1,3 +1,7 @@
+import { Modal } from "antd";
+import DaumPostcodeEmbed from "react-daum-postcode";
+import type { Address } from "react-daum-postcode";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "./ItemWrite.validation";
@@ -17,6 +21,7 @@ import {
   IQueryFetchUseditemArgs,
 } from "../../../../commons/types/generated/types";
 import { LoginCheck } from "../../../commons/hocs/withAuth";
+import { useState } from "react";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
@@ -46,6 +51,9 @@ const FETCH_ITEM = gql`
 `;
 
 export default function ItemWrite(props: IItemWrite) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
   const router = useRouter();
   const { data } = useQuery<
     Pick<IQuery, "fetchUseditem">,
@@ -66,11 +74,19 @@ export default function ItemWrite(props: IItemWrite) {
     });
 
   const onChangeContents = (value: string): void => {
-    console.log(value);
     setValue("contents", value === "<p><br></p>" ? "" : value);
     void trigger("contents");
   };
 
+  const onCompleteAddress = (data: Address) => {
+    setAddress(data.address);
+    setZipcode(data.zonecode);
+    setIsOpen((prev) => !prev);
+  };
+  function onClickAddress() {
+    setIsOpen((prev) => !prev);
+  }
+  console.log("687587", address);
   LoginCheck();
 
   return (
@@ -110,7 +126,20 @@ export default function ItemWrite(props: IItemWrite) {
           <div>태그입력</div>
           {/* <InputItemWrite register={register("tags")} /> */}
           <div>주소</div>
-          <KakaoPage />
+          <KakaoPage address={address} />
+
+          {isOpen && (
+            <Modal open={true} onOk={onClickAddress} onCancel={onClickAddress}>
+              <DaumPostcodeEmbed onComplete={onCompleteAddress} />
+            </Modal>
+          )}
+          <button
+            type="button"
+            style={{ marginTop: "40px" }}
+            onClick={onClickAddress}
+          >
+            dhfsadijho
+          </button>
           <input type="text" />
           <input type="text" />
           <div>사진첨부</div>

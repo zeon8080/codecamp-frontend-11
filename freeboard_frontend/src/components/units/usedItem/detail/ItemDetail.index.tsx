@@ -7,6 +7,7 @@ import { useClickBuying } from "../../../commons/hooks/customs/useClickBuying";
 import { useClickDeleteItem } from "../../../commons/hooks/customs/useClickDeleteItem";
 import { useClickPick } from "../../../commons/hooks/customs/useClickPick";
 import { useQueryItem } from "../../../commons/hooks/query/useQueryItem";
+import KakaoPage from "../../../commons/map/kakao";
 import * as S from "./ItemDetail.styles";
 
 export default function ItemDetail(): JSX.Element {
@@ -17,6 +18,7 @@ export default function ItemDetail(): JSX.Element {
   const { onClickBasket } = useClickBasket();
   const { data } = useQueryItem();
   const [, setBasketState] = useState();
+  const [isKakao, setIsKakao] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -80,6 +82,7 @@ export default function ItemDetail(): JSX.Element {
                 />
               )}
             </S.ItemContents>
+            <KakaoPage isKakao={isKakao} />
           </S.DetailWrapper>
           <S.ButtonBox>
             <Link href={"/Items"}>

@@ -92,7 +92,7 @@ export default function BoardWrite(props: IBoardWrite): JSX.Element {
   function onChangeYoutubeUrl(event: ChangeEvent<HTMLInputElement>) {
     setYoutubeUrl(event.target.value);
   }
-  async function onClickAddress() {
+  function onClickAddress() {
     setIsOpen((prev) => !prev);
   }
 
