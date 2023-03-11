@@ -51,9 +51,6 @@ const FETCH_ITEM = gql`
 `;
 
 export default function ItemWrite(props: IItemWrite) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState("");
   const router = useRouter();
   const { data } = useQuery<
     Pick<IQuery, "fetchUseditem">,
@@ -64,7 +61,15 @@ export default function ItemWrite(props: IItemWrite) {
     },
   });
 
-  const { onClickNew, onChangeFile, imageUrls } = useClickNew();
+  const {
+    onClickNew,
+    onChangeFile,
+    imageUrls,
+    onCompleteAddress,
+    onClickAddress,
+    isOpen,
+    address,
+  } = useClickNew();
   const { onClickEdit } = useClickEdit();
 
   const { register, handleSubmit, formState, setValue, trigger } =
@@ -78,15 +83,6 @@ export default function ItemWrite(props: IItemWrite) {
     void trigger("contents");
   };
 
-  const onCompleteAddress = (data: Address) => {
-    setAddress(data.address);
-    setZipcode(data.zonecode);
-    setIsOpen((prev) => !prev);
-  };
-  function onClickAddress() {
-    setIsOpen((prev) => !prev);
-  }
-  console.log("687587", address);
   LoginCheck();
 
   return (

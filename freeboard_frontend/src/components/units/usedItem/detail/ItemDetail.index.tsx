@@ -39,7 +39,11 @@ export default function ItemDetail(): JSX.Element {
             <S.TopWrapper>
               <S.ImageBox>
                 <img
-                  src={`https://storage.googleapis.com/${data?.fetchUseditem.images?.[0]}`}
+                  src={
+                    data?.fetchUseditem.images[0]
+                      ? `https://storage.googleapis.com/${data?.fetchUseditem.images?.[0]}`
+                      : "/empty.png"
+                  }
                 />
               </S.ImageBox>
               <div>

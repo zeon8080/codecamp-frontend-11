@@ -137,7 +137,7 @@ export default function ItemList(): JSX.Element {
                       src={`https://storage.googleapis.com/${el.images[0]}`}
                     />
                   ) : (
-                    <div></div>
+                    <img src="empty.png"></img>
                   )}
                 </S.ItemImage>
                 <S.ItemContents>
