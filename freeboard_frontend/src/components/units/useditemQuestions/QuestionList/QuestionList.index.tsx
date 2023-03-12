@@ -38,13 +38,6 @@ export const UPDATE_QUESTION = gql`
   }
 `;
 
-// interface IQusetionList {
-//   data?: Pick<IQuery, "fetchUseditemQuestions">;
-//   onLoadMore: () => void;
-// }
-// interface IQuestionUpdate {
-//   contents: string;
-// }
 export default function QuestionList() {
   const router = useRouter();
 

@@ -22,7 +22,6 @@ const FETCH_ITEMS_LIST = gql`
       seller {
         name
       }
-      # createdAt
     }
   }
 `;

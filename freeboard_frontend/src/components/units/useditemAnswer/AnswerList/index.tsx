@@ -14,7 +14,6 @@ const FETCH_ANSWER = gql`
     fetchUseditemQuestionAnswers(useditemQuestionId: $useditemQuestionId) {
       _id
       contents
-      # createdAt
     }
   }
 `;
@@ -55,9 +54,6 @@ interface IProps {
   el: string;
 }
 
-// interface IForm {
-//   contents;
-// }
 export default function AnswerList(props: IProps) {
   const router = useRouter();
   const { register, handleSubmit } = useForm<IAnswer>();

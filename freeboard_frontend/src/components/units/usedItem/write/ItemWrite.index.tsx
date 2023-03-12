@@ -119,8 +119,7 @@ export default function ItemWrite(props: IItemWrite) {
             {...register("price")}
             defaultValue={data?.fetchUseditem.price ?? ""}
           />
-          <div>태그입력</div>
-          {/* <InputItemWrite register={register("tags")} /> */}
+
           <div>주소</div>
           <KakaoPage address={address} />
 
