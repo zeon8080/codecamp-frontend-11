@@ -5,7 +5,6 @@ export default function MainPagePresenter(props: MainPageUI): JSX.Element {
   return (
     <>
       <S.Wrapper>
-        {/* <S.MainPageBackground> */}
         <S.TitleBox>
           <S.Texts>Show your colors</S.Texts>
         </S.TitleBox>
@@ -20,7 +19,6 @@ export default function MainPagePresenter(props: MainPageUI): JSX.Element {
         <S.WheelBtn onClick={props.onClickMoveBoardLists}>
           <S.Wheel src="../../../wheel.png"></S.Wheel>
         </S.WheelBtn>
-        {/* </S.MainPageBackground> */}
       </S.Wrapper>
     </>
   );
