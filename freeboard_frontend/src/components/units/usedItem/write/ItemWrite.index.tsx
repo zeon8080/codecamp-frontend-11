@@ -1,7 +1,5 @@
 import { Modal } from "antd";
 import DaumPostcodeEmbed from "react-daum-postcode";
-import type { Address } from "react-daum-postcode";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "./ItemWrite.validation";
@@ -21,7 +19,6 @@ import {
   IQueryFetchUseditemArgs,
 } from "../../../../commons/types/generated/types";
 import { LoginCheck } from "../../../commons/hocs/withAuth";
-import { useState } from "react";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
