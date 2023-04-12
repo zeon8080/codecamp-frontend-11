@@ -29,8 +29,8 @@ export default function LayoutNavigation(): JSX.Element {
     void router.push("/boards");
   };
 
-  const onClickMain = (): void => {
-    void router.push("/main");
+  const onClickNewPost = (): void => {
+    void router.push("/boards/new");
   };
 
   const onClickMyPage = (): void => {
@@ -47,8 +47,8 @@ export default function LayoutNavigation(): JSX.Element {
   return (
     <>
       <Wrapper>
-        <Buttons onClick={onClickMain}>Main</Buttons>
         <Buttons onClick={onClickLists}>Boards</Buttons>
+        <Buttons onClick={onClickNewPost}>New Post</Buttons>
         <Buttons onClick={onClickItems}>Items</Buttons>
         <Buttons onClick={onClickNew}>New Sell</Buttons>
         <Buttons onClick={onClickMyPage}>My Page</Buttons>

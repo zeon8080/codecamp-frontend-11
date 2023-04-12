@@ -19,12 +19,12 @@ const ImgBox = styled.div`
 `;
 
 const Box = styled.div`
-  border: 1px solid black;
   padding: 28px 34px 32px 36px;
   position: fixed;
   right: 30px;
   top: 25%;
-  background-color: white;
+  background-color: #d6fae4;
+  border: 5px solid #4ce185;
   display: flex;
   flex-direction: column;
   justify-content: center;

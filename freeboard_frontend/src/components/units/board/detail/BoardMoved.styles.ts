@@ -50,6 +50,10 @@ export const WriterName = styled.div`
   font-weight: bold;
   color: #191f1c;
 `;
+
+export const ProfileImg = styled.img`
+  object-fit: contain;
+`;
 export const CreateDate = styled.div`
   font-size: 16px;
   color: #242d29;

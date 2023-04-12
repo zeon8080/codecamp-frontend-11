@@ -13,7 +13,6 @@ export default function BoardListsUI(props: IBoardListsUI) {
             placeholder="제목을 검색해주세요."
             onChange={props.onChangeSearch}
           ></S.TitleSearch>
-          <S.ButtonSearch>Search</S.ButtonSearch>
         </S.ListsRowHead>
 
         <div>

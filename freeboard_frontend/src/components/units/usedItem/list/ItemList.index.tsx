@@ -114,7 +114,11 @@ export default function ItemList(): JSX.Element {
       {/* 소괄호는 리턴없이 알아서 해준다! */}
       <S.Container>
         <S.Wrapper>
-          <input type="text" onChange={onChangeSearch} />
+          <S.SearchInput
+            placeholder="검색어를 입력해주세요."
+            type="text"
+            onChange={onChangeSearch}
+          />
           <S.Scroll
             pageStart={0}
             loadMore={onLoadMore}

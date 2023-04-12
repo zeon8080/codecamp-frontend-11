@@ -1,4 +1,3 @@
-import LayoutBanner from "./banner";
 import LayoutFooter from "./footer";
 import LayoutHeader from "./header/header.index";
 import LayoutNavigation from "./navigation";
@@ -20,7 +19,6 @@ export default function Layout(props: ILayoutProps): JSX.Element {
       <LayoutRecent />
       <LayoutNavigation />
       <div>{props.children}</div>
-      <LayoutFooter></LayoutFooter>
     </div>
   );
 }

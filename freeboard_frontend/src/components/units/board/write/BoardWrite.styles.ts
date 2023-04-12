@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   padding: 60px 100px 100px 100px;
   box-sizing: border-box;
   border: 1px solid black;
-  border-radius: 15px;
+  border-radius: 5px;
   filter: drop-shadow(0 0 0.75rem #8cf2b3);
   margin-bottom: 50px;
 `;

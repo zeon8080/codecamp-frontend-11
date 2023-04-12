@@ -44,6 +44,15 @@ export const ItemContents = styled.div`
   color: #0d110f;
 `;
 
+export const SearchInput = styled.input`
+  width: 254px;
+  border-radius: 10px;
+  background-color: #8cf2b3;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 14px;
+`;
+
 export const ItemImage = styled.div`
   width: 220px;
   height: 220px;

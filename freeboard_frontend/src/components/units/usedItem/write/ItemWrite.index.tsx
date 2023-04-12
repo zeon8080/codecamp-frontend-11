@@ -91,71 +91,84 @@ export default function ItemWrite(props: IItemWrite) {
       <S.Container>
         <S.Wrapper>
           <S.Title>상품 {props.isEdit ? "수정" : "등록"}</S.Title>
-          <div>상품명</div>
-          <input
-            type="text"
-            {...register("name")}
-            defaultValue={data?.fetchUseditem.name ?? ""}
-          />
+          <S.DivMargin>
+            <div>상품명</div>
+            <S.Input
+              type="text"
+              {...register("name")}
+              defaultValue={data?.fetchUseditem.name ?? ""}
+            />
 
-          <div>{formState.errors.name?.message}</div>
-          <div>한줄요약</div>
-          <input
-            type="text"
-            {...register("remarks")}
-            defaultValue={data?.fetchUseditem.remarks ?? ""}
-          />
-          <div>상품설명</div>
-          <ReactQuill
-            onChange={onChangeContents}
-            defaultValue={data?.fetchUseditem.contents ?? ""}
-          />
-          <div>판매가격</div>
-          <input
-            type="text"
-            {...register("price")}
-            defaultValue={data?.fetchUseditem.price ?? ""}
-          />
-
-          <div>주소</div>
-          <KakaoPage address={address} />
-
-          {isOpen && (
-            <Modal open={true} onOk={onClickAddress} onCancel={onClickAddress}>
-              <DaumPostcodeEmbed onComplete={onCompleteAddress} />
-            </Modal>
-          )}
-          <button
-            type="button"
-            style={{ marginTop: "40px" }}
-            onClick={onClickAddress}
-          >
-            dhfsadijho
-          </button>
-          <input type="text" />
-          <input type="text" />
-          <div>사진첨부</div>
-          <div>
-            {imageUrls.map((el, index) => (
-              <div>
-                <input
-                  id={String(index)}
-                  type="file"
-                  onChange={onChangeFile}
-                  multiple={true}
-                />
-                <img
-                  src={
-                    imageUrls[index] === ""
-                      ? `https://storage.googleapis.com/${data?.fetchUseditem.images[index]}`
-                      : `https://storage.googleapis.com/${imageUrls[index]}`
-                  }
-                />
-              </div>
-            ))}
-          </div>
-          <div>메인 사진 설정</div>
-          <button>{props.isEdit ? "수정" : "등록"}하기</button>
+            <div>{formState.errors.name?.message}</div>
+          </S.DivMargin>
+          <S.DivMargin>
+            <div>한줄요약</div>
+            <S.Input
+              type="text"
+              {...register("remarks")}
+              defaultValue={data?.fetchUseditem.remarks ?? ""}
+            />
+          </S.DivMargin>
+          <S.DivMargin>
+            <div>상품설명</div>
+            <ReactQuill
+              style={{ height: "300px" }}
+              onChange={onChangeContents}
+              defaultValue={data?.fetchUseditem.contents ?? ""}
+            />
+          </S.DivMargin>
+          <S.DivMargin>
+            <div>판매가격</div>
+            <S.Input
+              type="text"
+              {...register("price")}
+              defaultValue={data?.fetchUseditem.price ?? ""}
+            />
+          </S.DivMargin>
+          <S.DivMargin>
+            <div>직거래 장소</div>
+            <KakaoPage address={address} />
+            {isOpen && (
+              <Modal
+                open={true}
+                onOk={onClickAddress}
+                onCancel={onClickAddress}
+              >
+                <DaumPostcodeEmbed onComplete={onCompleteAddress} />
+              </Modal>
+            )}
+            <S.Button
+              type="button"
+              style={{ marginTop: "40px" }}
+              onClick={onClickAddress}
+            >
+              주소 검색
+            </S.Button>
+          </S.DivMargin>
+          <S.DivMargin>
+            <div>사진첨부</div>
+            <div>
+              {imageUrls.map((el, index) => (
+                <div>
+                  <input
+                    id={String(index)}
+                    type="file"
+                    onChange={onChangeFile}
+                  />
+                  <S.UploadImg
+                    src={
+                      imageUrls[index] === ""
+                        ? `https://storage.googleapis.com/${data?.fetchUseditem.images[index]}`
+                        : `https://storage.googleapis.com/${imageUrls[index]}`
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          </S.DivMargin>
+          <S.SubmitBox>
+            <S.Button>{props.isEdit ? "수정" : "등록"}하기</S.Button>
+          </S.SubmitBox>
         </S.Wrapper>
       </S.Container>
     </form>

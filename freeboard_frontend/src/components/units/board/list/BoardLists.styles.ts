@@ -27,7 +27,7 @@ export const ListsWrapper = styled.div`
 `;
 
 export const TitleSearch = styled.input`
-  width: 80%;
+  width: 400px;
   border: 5px solid #4ce185;
   border-radius: 10px;
   background-color: #8cf2b3;

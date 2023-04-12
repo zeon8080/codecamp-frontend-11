@@ -1,7 +1,7 @@
 declare const window: typeof globalThis & {
   IMP: any;
 };
-
+import * as S from "./myPage.styles";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import {
@@ -79,22 +79,26 @@ export default function MyPage() {
   };
 
   return (
-    <>
-      <div>이메일: {data?.fetchUserLoggedIn.email}</div>
-      <div>닉네임: {data?.fetchUserLoggedIn.name}</div>
-      <div>잔액: {data?.fetchUserLoggedIn.userPoint?.amount}원</div>
-      <script
-        type="text/javascript"
-        src="https://code.jquery.com/jquery-1.12.4.min.js"
-      ></script>
-      <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <S.Container>
+      <S.Wrapper>
+        <S.InfoBox>
+          <div>이메일: {data?.fetchUserLoggedIn.email}</div>
+          <div>닉네임: {data?.fetchUserLoggedIn.name}</div>
+          <div>잔액: {data?.fetchUserLoggedIn.userPoint?.amount}원</div>
+          <script
+            type="text/javascript"
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+          ></script>
+          <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
-      <form onSubmit={handleSubmit(onClickPayment)}>
-        <div>
-          <input type="text" {...register("point")} />
-          <button>충전하기</button>
-        </div>
-      </form>
-    </>
+          <form onSubmit={handleSubmit(onClickPayment)}>
+            <div>
+              <S.Input type="text" {...register("point")} />
+              <S.Button>충전하기</S.Button>
+            </div>
+          </form>
+        </S.InfoBox>
+      </S.Wrapper>
+    </S.Container>
   );
 }

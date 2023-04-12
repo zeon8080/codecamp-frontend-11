@@ -11,7 +11,7 @@ export default function BoardMovedUI(props: IBoardMovedUI) {
         <S.BoardWrapper>
           <S.WriterHeader>
             <S.WriterProfile>
-              <img src="/profile.png"></img>
+              <S.ProfileImg src="/profile.png"></S.ProfileImg>
               <S.WriterBox>
                 <S.WriterName>{props.data?.fetchBoard?.writer}</S.WriterName>
                 <S.CreateDate>
@@ -20,9 +20,6 @@ export default function BoardMovedUI(props: IBoardMovedUI) {
               </S.WriterBox>
             </S.WriterProfile>
             <S.ImgBox>
-              <S.ImageBtn>
-                <img src="/link.png"></img>
-              </S.ImageBtn>
               <S.ImageBtn>
                 <Tooltip
                   placement="topRight"
