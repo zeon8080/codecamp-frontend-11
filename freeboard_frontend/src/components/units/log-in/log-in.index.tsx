@@ -32,9 +32,9 @@ export default function LogInForm() {
           <S.Errors>{formState.errors.password?.message}</S.Errors>
           <S.Texts>로그인 상태 유지하기</S.Texts>
 
-          <div>
-            <S.LogInBtn>LOG - IN</S.LogInBtn>
-          </div>
+          <S.ButtonsBox>
+            <S.LogInBtn>로그인</S.LogInBtn>
+          </S.ButtonsBox>
           <S.DivideLine></S.DivideLine>
         </form>
         <S.ButtonsBox>

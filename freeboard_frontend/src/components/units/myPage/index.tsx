@@ -9,6 +9,7 @@ import {
   IMutationCreatePointTransactionOfLoadingArgs,
   IQuery,
 } from "../../../commons/types/generated/types";
+import { LoginCheck } from "../../commons/hocs/withAuth";
 
 const CREATE_POINT = gql`
   mutation createPointTransactionOfLoading($impUid: ID!) {
@@ -77,6 +78,8 @@ export default function MyPage() {
       }
     );
   };
+
+  LoginCheck();
 
   return (
     <S.Container>

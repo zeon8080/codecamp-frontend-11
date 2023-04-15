@@ -20,7 +20,7 @@ export const useClickJoin = () => {
         });
         console.log(result);
         alert("회원가입이 완료되었습니다.");
-        void router.push("/boards");
+        void router.push("/log-in");
       }
     } catch (error) {
       if (error instanceof Error) alert(error.message);

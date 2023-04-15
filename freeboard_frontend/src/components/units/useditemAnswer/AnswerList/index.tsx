@@ -8,6 +8,7 @@ import {
   IMutationUpdateUseditemQuestionAnswerArgs,
 } from "../../../../commons/types/generated/types";
 import { useRouter } from "next/router";
+import * as S from "./AnswerList.styles";
 
 const FETCH_ANSWER = gql`
   query fetchUseditemQuestionAnswers($useditemQuestionId: ID!) {
@@ -108,32 +109,34 @@ export default function AnswerList(props: IProps) {
   };
 
   return (
-    <>
-      <div>
-        {answerData?.fetchUseditemQuestionAnswers.map((el: IEl) => (
-          <>
-            {el._id !== answerEditIndex ? (
+    <S.Container>
+      {answerData?.fetchUseditemQuestionAnswers.map((el: IEl) => (
+        <>
+          {el._id !== answerEditIndex ? (
+            <S.AnswerListBox>
+              <div>답변 : {el.contents}</div>
               <div>
-                <div style={{ color: "red" }}>{el.contents}</div>
-                <button id={el._id} onClick={onClickUpdateAnswer}>
+                <S.Buttons id={el._id} onClick={onClickUpdateAnswer}>
                   수정
-                </button>
-                <button id={el._id} onClick={onClickDeleteAnswer}>
+                </S.Buttons>
+                <S.Buttons id={el._id} onClick={onClickDeleteAnswer}>
                   삭제
-                </button>
+                </S.Buttons>
               </div>
-            ) : (
+            </S.AnswerListBox>
+          ) : (
+            <S.AnswerListBox>
               <form
                 id={el._id}
                 onSubmit={handleSubmit(onClickUpdateAnswerComplete)}
               >
-                <input type="text" {...register("contents")} />
-                <button>수정완료</button>
+                <S.AnswerInput type="text" {...register("contents")} />
+                <S.Buttons>수정</S.Buttons>
               </form>
-            )}
-          </>
-        ))}
-      </div>
-    </>
+            </S.AnswerListBox>
+          )}
+        </>
+      ))}
+    </S.Container>
   );
 }

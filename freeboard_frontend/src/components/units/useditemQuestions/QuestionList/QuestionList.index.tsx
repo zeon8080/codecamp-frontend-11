@@ -91,34 +91,39 @@ export default function QuestionList() {
             <div key={el._id}>
               <S.Container>
                 <S.QuestionBox>
-                  <S.QuestionContents id={el._id}>
-                    {el.user.name} : {el.contents}
-                  </S.QuestionContents>
-                  <S.QuestionCreated>
-                    {el.createdAt.slice(0, 10)}
-                  </S.QuestionCreated>
-                  <button onClick={onClickQuestionEdit} id={String(index)}>
-                    Edit
-                  </button>
-                  <button
-                    id={el._id}
-                    type="button"
-                    onClick={onClickQuestionDelete}
-                  >
-                    Delete
-                  </button>
-                  <button onClick={onClickNewAnswer} id={String(index)}>
-                    Answer
-                  </button>
+                  <S.UserBox>
+                    <span id={el._id}>
+                      {el.user.name} : {el.contents}
+                    </span>
+                  </S.UserBox>
+                  <S.CreatedAt>{el.createdAt.slice(0, 10)}</S.CreatedAt>
+                  <div>
+                    <S.Buttons onClick={onClickQuestionEdit} id={String(index)}>
+                      수정
+                    </S.Buttons>
+                    <S.Buttons
+                      id={el._id}
+                      type="button"
+                      onClick={onClickQuestionDelete}
+                    >
+                      삭제
+                    </S.Buttons>
+                    <S.Buttons onClick={onClickNewAnswer} id={String(index)}>
+                      답글
+                    </S.Buttons>
+                  </div>
                 </S.QuestionBox>
-                <AnswerList el={el._id} />
               </S.Container>
-
+              <AnswerList el={el._id} />
               {index === answerIndex ? (
-                <form onSubmit={handleSubmit(onClickAnswer)} id={el._id}>
-                  <input type="text" {...register("contents")} />
-                  <button>Answer Complete</button>
-                </form>
+                <S.Container>
+                  <S.AnswerBox>
+                    <form onSubmit={handleSubmit(onClickAnswer)} id={el._id}>
+                      <S.AnswerInput type="text" {...register("contents")} />
+                      <S.AnswerBtn>답변</S.AnswerBtn>
+                    </form>
+                  </S.AnswerBox>
+                </S.Container>
               ) : (
                 <div></div>
               )}
@@ -131,14 +136,14 @@ export default function QuestionList() {
               <div key={el._id}>
                 <S.Container>
                   <S.QuestionBox>
-                    <input
+                    <S.Input
                       type="text"
                       {...register("contents")}
                       defaultValue={
                         data?.fetchUseditemQuestions[index].contents
                       }
                     />
-                    <button id={el._id}>Edit Complete</button>
+                    <S.Buttons id={el._id}>수정</S.Buttons>
                   </S.QuestionBox>
                 </S.Container>
               </div>

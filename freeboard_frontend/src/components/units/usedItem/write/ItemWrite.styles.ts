@@ -66,3 +66,8 @@ export const SubmitBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Errors = styled.div`
+  color: red;
+  font-size: 8px;
+`;

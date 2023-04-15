@@ -99,7 +99,7 @@ export default function ItemWrite(props: IItemWrite) {
               defaultValue={data?.fetchUseditem.name ?? ""}
             />
 
-            <div>{formState.errors.name?.message}</div>
+            <S.Errors>{formState.errors.name?.message}</S.Errors>
           </S.DivMargin>
           <S.DivMargin>
             <div>한줄요약</div>
@@ -124,6 +124,7 @@ export default function ItemWrite(props: IItemWrite) {
               {...register("price")}
               defaultValue={data?.fetchUseditem.price ?? ""}
             />
+            <S.Errors>{formState.errors.price?.message}</S.Errors>
           </S.DivMargin>
           <S.DivMargin>
             <div>직거래 장소</div>

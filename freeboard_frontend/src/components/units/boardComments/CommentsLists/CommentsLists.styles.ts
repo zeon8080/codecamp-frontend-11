@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   background-color: #0d110f;
+  height: 100%;
 `;
 
 export const WriterHeader = styled.div`

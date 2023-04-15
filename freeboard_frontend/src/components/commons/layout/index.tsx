@@ -1,4 +1,3 @@
-import LayoutFooter from "./footer";
 import LayoutHeader from "./header/header.index";
 import LayoutNavigation from "./navigation";
 import { useRouter } from "next/router";
@@ -9,14 +8,14 @@ interface ILayoutProps {
 
 export default function Layout(props: ILayoutProps): JSX.Element {
   const router = useRouter();
-  const HIDDEN_HEADER = ["/main"];
+  const HIDDEN_RECENT = ["/join", "/log-in"];
 
-  const isHiddenHeader = HIDDEN_HEADER.includes(router.asPath);
+  const isHiddenRecent = HIDDEN_RECENT.includes(router.asPath);
 
   return (
     <div>
-      {!isHiddenHeader && <LayoutHeader />}
-      <LayoutRecent />
+      <LayoutHeader />
+      {!isHiddenRecent && <LayoutRecent />}
       <LayoutNavigation />
       <div>{props.children}</div>
     </div>
