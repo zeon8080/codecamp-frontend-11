@@ -8,7 +8,7 @@ import UploadBasicUi from "./UploadBasic.presenter";
 import { checkValidationImage } from "./UploadBasic.validation";
 
 export default function UploadBasic(props: IUploadBasic): JSX.Element {
-  const fileRef = useRef(null);
+  const fileRef = useRef<any>(null);
   const [uploadFile] = useMutation(UPLOAD_FILE);
 
   const onClickUpload = (): void => {

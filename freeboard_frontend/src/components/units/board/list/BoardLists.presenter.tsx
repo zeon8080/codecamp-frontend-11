@@ -38,7 +38,7 @@ export default function BoardListsUI(props: IBoardListsUI) {
                     .slice(0, 20)
                     .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
                     .split("!@#")
-                    .map((el) => (
+                    .map((el: string) => (
                       <span
                         key={uuidv4()}
                         style={{

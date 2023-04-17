@@ -3,25 +3,22 @@ import { checkValidationFile } from "../../../../commons/libraries/validationFil
 import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { UseFieldArrayReturn } from "react-hook-form";
-import {
-  IMutation,
-  IMutationUploadFileArgs,
-  IQuery,
-} from "../../../../commons/types/generated/types";
+import { IQuery } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
 import { useMutationNew } from "../mutation/useMutationNew";
 import { useMutationUpload } from "../mutation/useMutationUploadFile";
 import { Address } from "react-daum-postcode";
 
 export interface IItemWrite {
-  name: string;
-  remarks: string;
-  contents: string;
-  price: number;
-  fileUrls: UseFieldArrayReturn;
-  isEdit: boolean;
+  name?: string;
+  remarks?: string;
+  contents?: string;
+  price?: number;
+  fileUrls?: UseFieldArrayReturn;
+  isEdit?: boolean;
   data?: Pick<IQuery, "fetchUseditem">;
 }
+
 export const useClickNew = () => {
   const router = useRouter();
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
@@ -33,12 +30,15 @@ export const useClickNew = () => {
   const onChangeFile = async (
     event: ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
-    const file = event.target.files?.[0]; // File Object
+    const file = event.target.files?.[0];
     const isValid = checkValidationFile(file);
     if (!isValid) return;
     try {
       const result = await uploadFile({ variables: { file } });
-      onChangeFileUrls(result.data?.uploadFile.url, Number(event?.target.id));
+      const imageUrl = result?.data?.uploadFile?.url;
+      if (imageUrl) {
+        onChangeFileUrls(imageUrl, Number(event?.target.id));
+      }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }

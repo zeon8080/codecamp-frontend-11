@@ -93,7 +93,7 @@ export default function BoardWriteUI(props: IBoardWriteUI) {
           <S.YouInput
             type="text"
             onChange={props.onChangeYoutubeUrl}
-            defaultValue={props.data?.fetchBoard.youtubeUrl}
+            defaultValue={props.data?.fetchBoard.youtubeUrl || ""}
             placeholder="링크를 복사해주세요."
           />
         </div>

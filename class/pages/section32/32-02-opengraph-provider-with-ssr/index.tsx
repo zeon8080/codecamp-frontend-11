@@ -43,7 +43,7 @@ export const getServerSideProps = async (): Promise<any> => {
   console.log("여기는 서버입니다.");
   // 1.여기서 API요청
   const graphQLClient = new GraphQLClient(
-    "https://backend-practice.codebootcamp.co.kr/graphql"
+    "https://backend11.codebootcamp.co.kr/graphql05"
   );
   const result = await graphQLClient.request(FETCH_USEDITEM, {
     useditemId: "63fd9eccaef9f000281b2ee4",

@@ -14,6 +14,7 @@ export default function QuestionWrite(props: IQuestionWrite): JSX.Element {
     useForm<IQuestionWrite>({
       resolver: yupResolver(schema),
       mode: "onChange",
+      defaultValues: { contents: "" },
     });
 
   return (

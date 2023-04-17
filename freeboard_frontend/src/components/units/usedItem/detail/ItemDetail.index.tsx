@@ -40,8 +40,8 @@ export default function ItemDetail(): JSX.Element {
               <S.ImageBox>
                 <img
                   src={
-                    data?.fetchUseditem.images[0]
-                      ? `https://storage.googleapis.com/${data?.fetchUseditem.images?.[0]}`
+                    data?.fetchUseditem?.images?.[0]
+                      ? `https://storage.googleapis.com/${data?.fetchUseditem?.images?.[0]}`
                       : "/empty.png"
                   }
                 />
@@ -67,7 +67,12 @@ export default function ItemDetail(): JSX.Element {
                   >
                     찜{data?.fetchUseditem.pickedCount}
                   </S.PickBtn>
-                  <S.BasketBtn onClick={onClickBasket(data?.fetchUseditem)}>
+                  <S.BasketBtn
+                    onClick={() => {
+                      if (!data?.fetchUseditem) return;
+                      onClickBasket(data.fetchUseditem);
+                    }}
+                  >
                     장바구니
                   </S.BasketBtn>
 
@@ -86,7 +91,7 @@ export default function ItemDetail(): JSX.Element {
                 />
               )}
             </S.ItemContents>
-            <KakaoPage isKakao={isKakao} />
+            <KakaoPage isKakao={isKakao} address={""} />
           </S.DetailWrapper>
           <S.ButtonBox>
             <Link href={"/Items"}>

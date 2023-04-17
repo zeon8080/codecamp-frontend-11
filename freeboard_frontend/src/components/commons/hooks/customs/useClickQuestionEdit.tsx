@@ -8,11 +8,14 @@ export const useClickQuestionEdit = () => {
   const [updateQuestion] = useMutationQuestionEdit();
   const [myIndex, setMyIndex] = useState(-1);
 
-  const onClickQuestionEdit = (event) => {
+  const onClickQuestionEdit = (event: any) => {
     setMyIndex(Number(event.currentTarget.id));
   };
 
-  const onClickQuestionEditComplete = async (data, event) => {
+  const onClickQuestionEditComplete = async (
+    data: { contents: string },
+    event: any
+  ) => {
     await updateQuestion({
       variables: {
         updateUseditemQuestionInput: {

@@ -27,6 +27,14 @@ const FETCH_ITEM = gql`
     }
   }
 `;
+interface IItemWrite {
+  name: string;
+  remarks: string;
+  contents: string;
+  price: number;
+  fileUrls: string[];
+  isEdit: boolean;
+}
 
 export default function ItemEditPage() {
   const router = useRouter();

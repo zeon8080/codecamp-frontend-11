@@ -75,9 +75,7 @@ export default function AnswerList(props: IProps) {
     },
   });
 
-  const onClickUpdateAnswerComplete = async (data: IAnswer, event) => {
-    console.log("123123", event.target);
-
+  const onClickUpdateAnswerComplete = async (data: IAnswer, event: any) => {
     await updateAnswer({
       variables: {
         updateUseditemQuestionAnswerInput: {
@@ -93,7 +91,7 @@ export default function AnswerList(props: IProps) {
     setAnswerEditIndex(event.currentTarget.id);
   };
 
-  const onClickDeleteAnswer = async (event) => {
+  const onClickDeleteAnswer = async (event: any) => {
     await deleteAnswer({
       variables: {
         useditemQuestionAnswerId: event.target.id,

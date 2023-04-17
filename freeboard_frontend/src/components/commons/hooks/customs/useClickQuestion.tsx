@@ -4,7 +4,7 @@ import { useMutationQuestion } from "../mutation/useMutationQuestion";
 import { useMutationQuestionDelete } from "../mutation/useMutationQuestionDelete";
 
 export interface IQuestionWrite {
-  contents: string;
+  contents?: string;
 }
 
 export const useClickQuestion = () => {
@@ -12,7 +12,7 @@ export const useClickQuestion = () => {
   const [createQuestion] = useMutationQuestion();
   const [deleteQuestion] = useMutationQuestionDelete();
 
-  const onClickQuestion = (setValue) => async (data: IQuestionWrite) => {
+  const onClickQuestion = (setValue: any) => async (data: IQuestionWrite) => {
     try {
       const result = await createQuestion({
         variables: {
@@ -36,7 +36,7 @@ export const useClickQuestion = () => {
     setValue("contents", "");
   };
 
-  const onClickQuestionDelete = async (event) => {
+  const onClickQuestionDelete = async (event: any) => {
     await deleteQuestion({
       variables: {
         useditemQuestionId: event.target.id,

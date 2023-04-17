@@ -5,6 +5,7 @@ declare const window: typeof globalThis & {
 };
 interface IKakaoPageProps {
   address: string;
+  isKakao: boolean;
 }
 
 export default function KakaoPage(props: IKakaoPageProps): JSX.Element {
@@ -18,22 +19,22 @@ export default function KakaoPage(props: IKakaoPageProps): JSX.Element {
       window.kakao.maps.load(function () {
         var mapContainer = document.getElementById("map"), // 지도를 표시할 div
           mapOption = {
-            center: new kakao.maps.LatLng(37.5576, 126.9245), // 지도의 중심좌표
+            center: new window.kakao.maps.LatLng(37.5576, 126.9245), // 지도의 중심좌표
             level: 3, // 지도의 확대 레벨
           };
 
         // 지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+        var map = new window.kakao.maps.Map(mapContainer, mapOption);
         var imageSrc = "/markerBlue.png", // 마커이미지의 주소입니다
-          imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-          imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+          imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+          imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-        const markerImage = new kakao.maps.MarkerImage(
+        const markerImage = new window.kakao.maps.MarkerImage(
             imageSrc,
             imageSize,
             imageOption
           ),
-          markerPosition = new kakao.maps.LatLng(37.55439, 126.922444); // 마커가 표시될 위치입니다
+          markerPosition = new window.kakao.maps.LatLng(37.55439, 126.922444); // 마커가 표시될 위치입니다
         // 지도를 클릭한 위치에 표출할 마커입니다
         const marker = new window.kakao.maps.Marker({
           // 지도 중심좌표에 마커를 생성합니다
@@ -44,7 +45,7 @@ export default function KakaoPage(props: IKakaoPageProps): JSX.Element {
         // 지도에 마커를 표시합니다
         marker.setMap(map);
         // 주소-좌표 변환 객체를 생성합니다
-        var geocoder = new kakao.maps.services.Geocoder();
+        var geocoder = new window.kakao.maps.services.Geocoder();
 
         // 주소로 좌표를 검색합니다
         geocoder.addressSearch(
@@ -54,11 +55,14 @@ export default function KakaoPage(props: IKakaoPageProps): JSX.Element {
 
           function (result: any, status: any) {
             // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            if (status === window.kakao.maps.services.Status.OK) {
+              var coords = new window.kakao.maps.LatLng(
+                result[0].y,
+                result[0].x
+              );
 
               // 결과값으로 받은 위치를 마커로 표시합니다
-              var marker = new kakao.maps.Marker({
+              var marker = new window.kakao.maps.Marker({
                 map: map,
                 position: coords,
                 image: markerImage, // 마커이미지 설정

@@ -5,11 +5,11 @@ export const useClickAnswer = () => {
   const [createAnswer] = useMutationAnswer();
   const [answerIndex, setAnswerIndex] = useState(-1);
 
-  const onClickNewAnswer = (event) => {
+  const onClickNewAnswer = (event: any) => {
     setAnswerIndex(Number(event.currentTarget.id));
   };
 
-  const onClickAnswer = async (data, event) => {
+  const onClickAnswer = async (data: { contents: string }, event: any) => {
     await createAnswer({
       variables: {
         createUseditemQuestionAnswerInput: {

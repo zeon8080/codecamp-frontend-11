@@ -38,15 +38,14 @@ const Title = styled.div`
 `;
 
 export default function LayoutRecent() {
-  const [todayList, setTodayList] = useState();
+  const [todayList, setTodayList] = useState<any>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const todayFunc = () => {
-        let recent = JSON.parse(sessionStorage.getItem("todays"));
+        let recent = JSON.parse(sessionStorage.getItem("todays") || "null");
         if (recent !== null) setTodayList(recent.slice(0, 3));
       };
-
       todayFunc();
     }
   }, []);
@@ -55,7 +54,7 @@ export default function LayoutRecent() {
     <>
       <Box>
         <Title>최근 본 상품</Title>
-        {todayList?.map((el) => (
+        {todayList?.map((el: { images: any[] }) => (
           <>
             <ImgBox>
               <img

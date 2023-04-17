@@ -26,11 +26,10 @@ const FETCH_ITEMS_LIST = gql`
   }
 `;
 
-interface IItmesList {
-  data?: Pick<IQuery, "fetchUseditems">;
-
-  onLoadMore: () => void;
-}
+// interface IItmesList {
+//   data?: Pick<IQuery, "fetchUseditems">;
+//   onLoadMore: () => void;
+// }
 
 export default function ItemList(): JSX.Element {
   const router = useRouter();
@@ -38,10 +37,8 @@ export default function ItemList(): JSX.Element {
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
   >(FETCH_ITEMS_LIST);
-
-  // const { data: searchData, refetch } = useQuery(FETCH_ITEMS_LIST);
   const [, setKeyword] = useState("");
-  const [todayList, setTodayList] = useState();
+  const [todayList, setTodayList] = useState<any>();
 
   const onLoadMore = (): void => {
     if (data === undefined) return;
@@ -65,10 +62,11 @@ export default function ItemList(): JSX.Element {
     });
   };
 
-  const onClickMoveDetail = (el) => (event) => {
-    onClickToday(el);
-    void router.push(`/Items/${event?.currentTarget.id}`);
-  };
+  const onClickMoveDetail =
+    (el: any) => (event: { currentTarget: { id: any } }) => {
+      onClickToday(el);
+      void router.push(`/Items/${event?.currentTarget.id}`);
+    };
 
   const onClickToday = (today: IUseditem) => {
     const todays: IUseditem[] = JSON.parse(
@@ -92,7 +90,7 @@ export default function ItemList(): JSX.Element {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const todayFunc = () => {
-        let localData = JSON.parse(localStorage.getItem("todays"));
+        let localData = JSON.parse(localStorage.getItem("todays") ?? "[]");
         setTodayList(localData);
       };
 
@@ -103,7 +101,7 @@ export default function ItemList(): JSX.Element {
   return (
     <>
       <div>
-        {todayList?.map((el) => (
+        {todayList?.map((el: any) => (
           <>
             <div>
               <img src={`https://storage.googleapis.com/${el.images[0]}`} />
@@ -111,7 +109,6 @@ export default function ItemList(): JSX.Element {
           </>
         ))}
       </div>
-      {/* 소괄호는 리턴없이 알아서 해준다! */}
       <S.Container>
         <S.Wrapper>
           <S.SearchInput

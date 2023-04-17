@@ -128,7 +128,7 @@ export default function ItemWrite(props: IItemWrite) {
           </S.DivMargin>
           <S.DivMargin>
             <div>직거래 장소</div>
-            <KakaoPage address={address} />
+            <KakaoPage address={address} isKakao={false} />
             {isOpen && (
               <Modal
                 open={true}
@@ -159,7 +159,9 @@ export default function ItemWrite(props: IItemWrite) {
                   <S.UploadImg
                     src={
                       imageUrls[index] === ""
-                        ? `https://storage.googleapis.com/${data?.fetchUseditem.images[index]}`
+                        ? `https://storage.googleapis.com/${
+                            data?.fetchUseditem?.images?.[index] ?? ""
+                          }`
                         : `https://storage.googleapis.com/${imageUrls[index]}`
                     }
                   />
