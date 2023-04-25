@@ -9,7 +9,7 @@ export const useClickAnswer = () => {
     setAnswerIndex(Number(event.currentTarget.id));
   };
 
-  const onClickAnswer = async (data: { contents: string }, event: any) => {
+  const onClickAnswer = async (data: any, event: any) => {
     await createAnswer({
       variables: {
         createUseditemQuestionAnswerInput: {

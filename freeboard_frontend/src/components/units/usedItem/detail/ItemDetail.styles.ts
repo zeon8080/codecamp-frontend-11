@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 1600px;
+  width: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: center;

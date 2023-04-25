@@ -12,10 +12,7 @@ export const useClickQuestionEdit = () => {
     setMyIndex(Number(event.currentTarget.id));
   };
 
-  const onClickQuestionEditComplete = async (
-    data: { contents: string },
-    event: any
-  ) => {
+  const onClickQuestionEditComplete = async (data: any, event: any) => {
     await updateQuestion({
       variables: {
         updateUseditemQuestionInput: {

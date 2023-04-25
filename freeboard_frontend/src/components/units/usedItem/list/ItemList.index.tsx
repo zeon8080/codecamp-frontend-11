@@ -141,13 +141,23 @@ export default function ItemList(): JSX.Element {
                   )}
                 </S.ItemImage>
                 <S.ItemContents>
-                  <span style={{ margin: "10px", cursor: "pointer" }}>
+                  <span
+                    style={{
+                      margin: "4px",
+                      fontSize: "14px",
+                      cursor: "pointer",
+                    }}
+                  >
                     {el.name}
                   </span>
-                  <div style={{ margin: "10px" }}>{el.remarks}</div>
+                  <div style={{ margin: "4px", fontSize: "14px" }}>
+                    {el.remarks}
+                  </div>
                 </S.ItemContents>
                 <S.ItemPrice>
-                  <span style={{ margin: "10px" }}>{el.price}</span>
+                  <span style={{ margin: "4px", fontSize: "14px" }}>
+                    {el.price}
+                  </span>
                 </S.ItemPrice>
               </S.ListWrapper>
             )) ?? <div></div>}

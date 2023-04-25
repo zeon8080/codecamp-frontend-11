@@ -4,7 +4,6 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  height: 100vh;
   background-color: #0d110f;
 `;
 
@@ -16,7 +15,6 @@ export const Wrapper = styled.div`
   margin-bottom: 180px;
   margin-top: 50px;
   background-color: #3e4149;
-
   border: 1px solid #4ce185;
   opacity: 0.9;
   color: white;

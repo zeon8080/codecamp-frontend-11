@@ -11,8 +11,8 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 1500px;
-  height: 1000px;
+  width: 1000px;
+  height: 100vh;
   overflow: auto;
   margin: 100px;
   background-color: #0d110f;
@@ -31,8 +31,8 @@ export const Scroll = styled(InfiniteScroll)`
 
 export const ListWrapper = styled.div`
   background-color: #8cf2b3;
-  width: 250px;
-  height: 400px;
+  width: 200px;
+  height: 300px;
   border-radius: 10px;
   filter: drop-shadow(0 0 0.3rem #4ce185);
   margin-bottom: 20px;
@@ -54,8 +54,8 @@ export const SearchInput = styled.input`
 `;
 
 export const ItemImage = styled.div`
-  width: 220px;
-  height: 220px;
+  width: 150px;
+  height: 150px;
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 1200px;
+  width: 1000px;
   margin: 100px;
   background-color: #d6fae4;
   padding: 60px 100px 100px 100px;
