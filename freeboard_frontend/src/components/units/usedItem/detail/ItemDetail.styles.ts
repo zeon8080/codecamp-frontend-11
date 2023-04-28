@@ -15,13 +15,14 @@ export const Wrapper = styled.div`
 `;
 export const DetailWrapper = styled.div`
   padding: 80px 120px;
+  height: 100%;
   background-color: #d6fae4;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border: 1px solid black;
   border-radius: 15px;
-  filter: drop-shadow(0 0 0.75rem #8cf2b3);
+  filter: drop-shadow(0 0 0.2rem #8cf2b3);
 `;
 
 export const WriterProfile = styled.div`
@@ -79,7 +80,6 @@ export const ItemName = styled.div`
 
 export const ItemContents = styled.div`
   width: 100%;
-  height: 250px;
   margin-bottom: 20px;
 `;
 
@@ -138,7 +138,6 @@ export const NameBox = styled.div`
   width: 820px;
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 51px;
 `;
 export const EditBtnBox = styled.div`
   display: flex;
@@ -152,13 +151,13 @@ export const EditBtnBox = styled.div`
 `;
 
 export const Divide1 = styled.div`
-  border-top: 3px solid rgba(85, 85, 85, 1);
+  border-top: 1px solid gray;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
 
 export const Price = styled.span`
-  font-size: 40px;
+  font-size: 20px;
   font-weight: 500;
   margin-right: 8px;
 `;
@@ -185,7 +184,7 @@ export const EditBtn = styled.div`
   border: 5px solid #4ce185;
   margin-right: 10px;
   cursor: pointer;
-  text-align: center; ;
+  text-align: center;
 `;
 
 export const PickBtn = styled.button`

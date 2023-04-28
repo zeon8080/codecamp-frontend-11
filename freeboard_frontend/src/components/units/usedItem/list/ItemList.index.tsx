@@ -102,20 +102,16 @@ export default function ItemList(): JSX.Element {
     <>
       <div>
         {todayList?.map((el: any) => (
-          <>
-            <div>
-              <img src={`https://storage.googleapis.com/${el.images[0]}`} />
-            </div>
-          </>
+          <img src={`https://storage.googleapis.com/${el.images[0]}`} />
         ))}
       </div>
       <S.Container>
+        <S.SearchInput
+          placeholder="검색어를 입력해주세요."
+          type="text"
+          onChange={onChangeSearch}
+        />
         <S.Wrapper>
-          <S.SearchInput
-            placeholder="검색어를 입력해주세요."
-            type="text"
-            onChange={onChangeSearch}
-          />
           <S.Scroll
             pageStart={0}
             loadMore={onLoadMore}
@@ -132,13 +128,13 @@ export default function ItemList(): JSX.Element {
                 {String(el._id).slice(-4).toUpperCase()}
               </span> */}
                 <S.ItemImage>
-                  {el.images && el.images[0] ? (
-                    <img
-                      src={`https://storage.googleapis.com/${el.images[0]}`}
-                    />
-                  ) : (
-                    <img src="empty.png"></img>
-                  )}
+                  <img
+                    src={
+                      el.images[0]
+                        ? `https://storage.googleapis.com/${el.images[0]}`
+                        : "/empty.png"
+                    }
+                  />
                 </S.ItemImage>
                 <S.ItemContents>
                   <span
@@ -148,15 +144,15 @@ export default function ItemList(): JSX.Element {
                       cursor: "pointer",
                     }}
                   >
-                    {el.name}
+                    상품명 : {el.name}
                   </span>
                   <div style={{ margin: "4px", fontSize: "14px" }}>
-                    {el.remarks}
+                    제목 : {el.remarks}
                   </div>
                 </S.ItemContents>
                 <S.ItemPrice>
                   <span style={{ margin: "4px", fontSize: "14px" }}>
-                    {el.price}
+                    가격 : {el.price}
                   </span>
                 </S.ItemPrice>
               </S.ListWrapper>

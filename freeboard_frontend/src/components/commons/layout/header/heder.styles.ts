@@ -39,7 +39,7 @@ export const BtnWrapper = styled.div`
 `;
 
 export const Btns = styled.div`
-  font-size: 20px;
+  font-size: 14px;
   margin-left: 60px;
   cursor: pointer;
 `;
@@ -80,11 +80,11 @@ export const Charge = styled.div`
 export const Basket = styled.div`
   background-color: #8cf2b3;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
   text-align: center;
-  line-height: 30px;
+  line-height: 20px;
   margin-left: 5px;
   color: black;
 `;

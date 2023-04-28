@@ -61,7 +61,7 @@ export default function LayoutRecent() {
                 src={
                   el.images[0]
                     ? `https://storage.googleapis.com/${el.images[0]}`
-                    : "/spah.png"
+                    : "/empty.png"
                 }
               />
             </ImgBox>
