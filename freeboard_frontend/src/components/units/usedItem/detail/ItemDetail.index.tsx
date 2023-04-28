@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useClickBasket } from "../../../commons/hooks/customs/useClickBasket";
 import { useClickBuying } from "../../../commons/hooks/customs/useClickBuying";
 import { useClickDeleteItem } from "../../../commons/hooks/customs/useClickDeleteItem";
-import { useClickPick } from "../../../commons/hooks/customs/useClickPick";
 import { useQueryItem } from "../../../commons/hooks/query/useQueryItem";
 import KakaoPage from "../../../commons/map/kakao";
 import * as S from "./ItemDetail.styles";
@@ -14,7 +13,6 @@ export default function ItemDetail(): JSX.Element {
   const router = useRouter();
   const { onClickDeleteItem } = useClickDeleteItem();
   const { onClickBuy } = useClickBuying();
-  const { onClickPick } = useClickPick();
   const { onClickBasket } = useClickBasket();
   const { data } = useQueryItem();
   const [, setBasketState] = useState();
@@ -38,46 +36,31 @@ export default function ItemDetail(): JSX.Element {
           <S.DetailWrapper>
             <S.TopWrapper>
               <S.ImageBox>
+                {/* <img
+                  src={`https://storage.googleapis.com/${data?.fetchUseditem?.images[0]}`}
+                /> */}
                 <img
                   src={
-                    data?.fetchUseditem?.images?.[0]
-                      ? `https://storage.googleapis.com/${data?.fetchUseditem?.images?.[0]}`
+                    data?.fetchUseditem.images
+                      ? `https://storage.googleapis.com/${data?.fetchUseditem.images[0]}`
                       : "/empty.png"
                   }
                 />
               </S.ImageBox>
               <div>
                 <S.NameBox>
-                  <div>{data?.fetchUseditem?.name}</div>
+                  <div>상품명 : {data?.fetchUseditem?.name}</div>
                 </S.NameBox>
+                <S.Divide1></S.Divide1>
 
-                <S.Price>{data?.fetchUseditem?.price}</S.Price>
+                <S.Price>가격 : {data?.fetchUseditem?.price}</S.Price>
                 <span>원</span>
                 <S.Divide1></S.Divide1>
-                <S.ItemContents>{data?.fetchUseditem?.remarks}</S.ItemContents>
+                <S.ItemContents>
+                  요약 : {data?.fetchUseditem?.remarks}
+                </S.ItemContents>
 
                 <S.Divide1></S.Divide1>
-                <S.BtnBox>
-                  <S.PickBtn
-                    onClick={onClickPick}
-                    style={{
-                      backgroundColor:
-                        data?.fetchUseditem.pickedCount !== 0 ? "red" : "gray",
-                    }}
-                  >
-                    찜{data?.fetchUseditem.pickedCount}
-                  </S.PickBtn>
-                  <S.BasketBtn
-                    onClick={() => {
-                      if (!data?.fetchUseditem) return;
-                      onClickBasket(data.fetchUseditem);
-                    }}
-                  >
-                    장바구니
-                  </S.BasketBtn>
-
-                  <S.BuyBtn onClick={onClickBuy}>바로구매</S.BuyBtn>
-                </S.BtnBox>
               </div>
             </S.TopWrapper>
             <S.ItemContents>
@@ -91,6 +74,18 @@ export default function ItemDetail(): JSX.Element {
                 />
               )}
             </S.ItemContents>
+            <S.BtnBox>
+              <S.BasketBtn
+                onClick={() => {
+                  if (!data?.fetchUseditem) return;
+                  onClickBasket(data.fetchUseditem);
+                }}
+              >
+                장바구니
+              </S.BasketBtn>
+
+              <S.BuyBtn onClick={onClickBuy}>바로구매</S.BuyBtn>
+            </S.BtnBox>
             <KakaoPage isKakao={isKakao} address={""} />
           </S.DetailWrapper>
           <S.ButtonBox>

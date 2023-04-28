@@ -14,11 +14,11 @@ export const Wrapper = styled.div`
   width: 1000px;
   height: 100vh;
   overflow: auto;
-  margin: 100px;
+  margin: 10px 100px 100px 100px;
   background-color: #0d110f;
   padding: 20px;
   border-radius: 15px;
-  filter: drop-shadow(0 0 0.75rem #8cf2b3);
+  filter: drop-shadow(0 0 0.2rem #8cf2b3);
 `;
 
 export const Scroll = styled(InfiniteScroll)`
@@ -45,11 +45,12 @@ export const ItemContents = styled.div`
 `;
 
 export const SearchInput = styled.input`
-  width: 254px;
+  width: 300px;
+  height: 50px;
+  font-size: 16px;
   border-radius: 10px;
   background-color: #8cf2b3;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   padding: 14px;
 `;
 

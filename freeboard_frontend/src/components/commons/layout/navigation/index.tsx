@@ -13,9 +13,10 @@ const Wrapper = styled.div`
 const Buttons = styled.button`
   border: 1px solid black;
   border-radius: 10px;
-  height: 50px;
-  width: 120px;
+  height: 40px;
+  width: 100px;
   font-weight: bold;
+  font-size: 16px;
   color: #3e4149;
   background-color: #8cf2b3;
   border: 5px solid #4ce185;
