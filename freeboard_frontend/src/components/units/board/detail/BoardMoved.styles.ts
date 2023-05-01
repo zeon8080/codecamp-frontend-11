@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 1200px;
+  width: 1000px;
   margin: 100px;
   display: flex;
   flex-direction: column;
@@ -95,8 +95,9 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 996px;
-  height: 480px;
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
   margin-bottom: 30px;
 `;
 
@@ -109,7 +110,6 @@ export const YoutubeView = styled.div`
 
 export const BoardContents = styled.div`
   margin-top: 40px;
-  margin-bottom: 120px;
 `;
 
 export const LikeImgBox = styled.div`

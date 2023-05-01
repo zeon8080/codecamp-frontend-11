@@ -42,7 +42,7 @@ export default function ItemDetail(): JSX.Element {
                 <img
                   src={
                     data?.fetchUseditem.images
-                      ? `https://storage.googleapis.com/${data?.fetchUseditem.images[0]}`
+                      ? `https://storage.googleapis.com/${data?.fetchUseditem?.images?.[0]}`
                       : "/empty.png"
                   }
                 />
